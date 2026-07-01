@@ -14,8 +14,38 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     xp_points: int
+    coins: int
     current_streak: int
+    last_login_date: Optional[datetime]
     rank: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class DSAQuestionBase(BaseModel):
+    title: str
+    difficulty: str
+    description: str
+    starter_code: str
+    test_cases: str
+
+class DSAQuestion(DSAQuestionBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class BattleRecordBase(BaseModel):
+    question_id: int
+    challenger_id: int
+    opponent_id: Optional[int]
+    challenger_time_ms: Optional[int]
+    opponent_time_ms: Optional[int]
+    status: str
+
+class BattleRecord(BattleRecordBase):
+    id: int
     created_at: datetime
 
     class Config:

@@ -6,6 +6,7 @@ import uvicorn
 import os
 from dotenv import load_dotenv
 from typing import List, Optional, Dict, Any
+from datetime import datetime, timezone
 
 import models
 import schemas
@@ -16,6 +17,13 @@ load_dotenv()
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="SkillForge API", version="1.0.0")
+
+@app.on_event("startup")
+def startup_event():
+    db = next(get_db())
+    from forge_service import seed_dsa_questions
+    seed_dsa_questions(db)
+
 
 # Configure CORS for frontend access
 app.add_middleware(
@@ -36,11 +44,31 @@ def read_root():
 
 def get_or_create_user(clerk_id: str, db: Session):
     user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    
+    now_utc = datetime.now(timezone.utc)
+    
     if not user:
-        user = models.User(clerk_id=clerk_id)
+        user = models.User(
+            clerk_id=clerk_id,
+            last_login_date=now_utc,
+            coins=5,
+            current_streak=1
+        )
         db.add(user)
         db.commit()
         db.refresh(user)
+    else:
+        last_login = user.last_login_date
+        if not last_login or last_login.date() < now_utc.date():
+            user.coins = (user.coins or 0) + 5
+            if last_login and (now_utc.date() - last_login.date()).days == 1:
+                user.current_streak = (user.current_streak or 0) + 1
+            else:
+                user.current_streak = 1
+            user.last_login_date = now_utc
+            db.commit()
+            db.refresh(user)
+            
     return user
 
 @app.post("/api/onboarding", response_model=schemas.User)
@@ -342,4 +370,51 @@ def get_admin_stats(db: Session = Depends(get_db)):
     }
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=10000, reload=True)
+
+# ==========================================
+# ARENA / BATTLE GROUND ENDPOINTS
+# ==========================================
+
+from pydantic import BaseModel as PydanticBaseModel
+
+class CodeSubmission(PydanticBaseModel):
+    code: str
+
+@app.get("/api/arena/questions", response_model=List[schemas.DSAQuestion])
+def get_dsa_questions(db: Session = Depends(get_db)):
+    return db.query(models.DSAQuestion).all()
+
+@app.get("/api/arena/questions/{question_id}", response_model=schemas.DSAQuestion)
+def get_dsa_question(question_id: int, db: Session = Depends(get_db)):
+    q = db.query(models.DSAQuestion).filter(models.DSAQuestion.id == question_id).first()
+    if not q:
+        raise HTTPException(status_code=404, detail="Question not found")
+    return q
+
+@app.post("/api/arena/questions/{question_id}/submit")
+def submit_solution(question_id: int, submission: CodeSubmission, clerk_id: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    q = db.query(models.DSAQuestion).filter(models.DSAQuestion.id == question_id).first()
+    if not q:
+        raise HTTPException(status_code=404, detail="Question not found")
+        
+    from forge_service import evaluate_code
+    passed, message = evaluate_code(submission.code, q.test_cases)
+    
+    if passed:
+        # Give reward
+        user.xp_points = (user.xp_points or 0) + 50
+        user.coins = (user.coins or 0) + 10
+        db.commit()
+        
+    return {"passed": passed, "message": message, "xp_earned": 50 if passed else 0, "coins_earned": 10 if passed else 0}
+
+@app.get("/api/arena/leaderboard")
+def get_leaderboard(db: Session = Depends(get_db)):
+    # Returns top 50 users by XP
+    users = db.query(models.User).order_by(models.User.xp_points.desc()).limit(50).all()
+    return [{"clerk_id": u.clerk_id, "rank": u.rank, "xp_points": u.xp_points, "coins": u.coins, "streak": u.current_streak} for u in users]

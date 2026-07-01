@@ -12,13 +12,41 @@ class User(Base):
     dream_career = Column(String)
     time_commitment = Column(String)
     xp_points = Column(Integer, default=0)
+    coins = Column(Integer, default=0)
     current_streak = Column(Integer, default=0)
+    last_login_date = Column(DateTime(timezone=True), nullable=True)
     rank = Column(String, default="Apprentice")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     roadmaps = relationship("Roadmap", back_populates="user")
     missions = relationship("UserMissionProgress", back_populates="user")
     assessments = relationship("AssessmentScore", back_populates="user")
+
+class DSAQuestion(Base):
+    __tablename__ = "dsa_questions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    difficulty = Column(String) # Easy, Medium, Hard
+    description = Column(Text)
+    starter_code = Column(Text)
+    test_cases = Column(Text) # JSON string of test cases
+
+class BattleRecord(Base):
+    __tablename__ = "battle_records"
+
+    id = Column(Integer, primary_key=True, index=True)
+    question_id = Column(Integer, ForeignKey("dsa_questions.id"))
+    challenger_id = Column(Integer, ForeignKey("users.id"))
+    opponent_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    challenger_time_ms = Column(Integer, nullable=True)
+    opponent_time_ms = Column(Integer, nullable=True)
+    status = Column(String, default="pending") # pending, completed
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    question = relationship("DSAQuestion")
+    challenger = relationship("User", foreign_keys=[challenger_id])
+    opponent = relationship("User", foreign_keys=[opponent_id])
 
 class Roadmap(Base):
     __tablename__ = "roadmaps"
