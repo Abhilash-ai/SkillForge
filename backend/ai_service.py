@@ -7,8 +7,8 @@ api_key = os.getenv("GEMINI_API_KEY")
 if api_key:
     genai.configure(api_key=api_key)
 
-# We use gemini-2.5-flash as the standard available model
-model = genai.GenerativeModel('gemini-2.5-flash')
+# We use gemini-3.5-flash as the standard available model with high rate limits
+model = genai.GenerativeModel('gemini-3.5-flash')
 
 def generate_career_roadmap(career: str, education_level: str, time_commitment: str) -> dict:
     """
