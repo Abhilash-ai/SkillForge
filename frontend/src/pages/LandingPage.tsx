@@ -42,12 +42,12 @@ const LandingPage = () => {
             </button>
           ) : (
             <>
-              <SignInButton mode="modal">
+              <SignInButton >
                 <button className="px-5 py-2 text-zinc-300 hover:text-white transition-colors font-medium">
                   Log in
                 </button>
               </SignInButton>
-              <SignUpButton mode="modal">
+              <SignUpButton >
                 <button className="px-6 py-2 rounded-full bg-gradient-to-r from-orange-600 to-rose-600 hover:from-orange-500 hover:to-rose-500 text-white font-medium shadow-lg shadow-rose-500/25 transition-all">
                   Get Started
                 </button>
@@ -107,7 +107,7 @@ const LandingPage = () => {
               Go to Dashboard <ArrowRight className="w-5 h-5" />
             </button>
           ) : (
-            <SignUpButton mode="modal">
+            <SignUpButton >
               <button className="px-8 py-4 rounded-full bg-white text-zinc-900 font-bold text-lg hover:bg-zinc-100 transition-colors flex items-center gap-2 shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]">
                 Start For Free <ArrowRight className="w-5 h-5" />
               </button>
