@@ -85,3 +85,30 @@ class AssessmentScore(Base):
 
     user = relationship("User", back_populates="assessments")
 
+
+
+class CommunityPost(Base):
+    __tablename__ = "community_posts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    title = Column(String)
+    content = Column(Text)
+    category = Column(String)  # 'discussions', 'teams', 'study'
+    tags = Column(String)  # comma separated
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    user = relationship("User")
+    replies = relationship("CommunityReply", back_populates="post", cascade="all, delete-orphan")
+
+class CommunityReply(Base):
+    __tablename__ = "community_replies"
+
+    id = Column(Integer, primary_key=True, index=True)
+    post_id = Column(Integer, ForeignKey("community_posts.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
+    content = Column(Text)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    post = relationship("CommunityPost", back_populates="replies")
+    user = relationship("User")

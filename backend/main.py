@@ -272,6 +272,54 @@ async def process_resume(file: UploadFile = File(...), job_description: str = Fo
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to process resume: {str(e)}")
 
+# ==========================================
+# COMMUNITY ENDPOINTS
+# ==========================================
+
+from sqlalchemy.orm import joinedload
+
+@app.get("/api/community/posts", response_model=List[schemas.CommunityPost])
+def get_community_posts(category: Optional[str] = None, db: Session = Depends(get_db)):
+    query = db.query(models.CommunityPost).options(joinedload(models.CommunityPost.user), joinedload(models.CommunityPost.replies).joinedload(models.CommunityReply.user))
+    if category and category != "all":
+        query = query.filter(models.CommunityPost.category == category)
+    return query.order_by(models.CommunityPost.created_at.desc()).all()
+
+@app.post("/api/community/posts", response_model=schemas.CommunityPost)
+def create_community_post(post: schemas.CommunityPostCreate, clerk_id: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    db_post = models.CommunityPost(**post.dict(), user_id=user.id)
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+    return db_post
+
+@app.get("/api/community/posts/{post_id}", response_model=schemas.CommunityPost)
+def get_community_post(post_id: int, db: Session = Depends(get_db)):
+    post = db.query(models.CommunityPost).options(joinedload(models.CommunityPost.user), joinedload(models.CommunityPost.replies).joinedload(models.CommunityReply.user)).filter(models.CommunityPost.id == post_id).first()
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return post
+
+@app.post("/api/community/posts/{post_id}/replies", response_model=schemas.CommunityReply)
+def create_community_reply(post_id: int, reply: schemas.CommunityReplyCreate, clerk_id: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    post = db.query(models.CommunityPost).filter(models.CommunityPost.id == post_id).first()
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+        
+    db_reply = models.CommunityReply(**reply.dict(), post_id=post_id, user_id=user.id)
+    db.add(db_reply)
+    db.commit()
+    db.refresh(db_reply)
+    return db_reply
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 

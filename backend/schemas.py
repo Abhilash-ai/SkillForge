@@ -93,3 +93,36 @@ class AssessmentScore(AssessmentScoreBase):
     created_at: datetime
     class Config:
         from_attributes = True
+
+class CommunityReplyBase(BaseModel):
+    content: str
+
+class CommunityReplyCreate(CommunityReplyBase):
+    pass
+
+class CommunityReply(CommunityReplyBase):
+    id: int
+    post_id: int
+    user_id: int
+    created_at: datetime
+    user: Optional[User] = None
+    class Config:
+        from_attributes = True
+
+class CommunityPostBase(BaseModel):
+    title: str
+    content: str
+    category: str
+    tags: str
+
+class CommunityPostCreate(CommunityPostBase):
+    pass
+
+class CommunityPost(CommunityPostBase):
+    id: int
+    user_id: int
+    created_at: datetime
+    user: Optional[User] = None
+    replies: List[CommunityReply] = []
+    class Config:
+        from_attributes = True
