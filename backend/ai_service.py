@@ -8,7 +8,7 @@ if api_key:
     genai.configure(api_key=api_key)
 
 # We use gemini-2.5-flash as the standard available model
-model = genai.GenerativeModel('gemini-2.5-flash-lite')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 def generate_career_roadmap(career: str, education_level: str, time_commitment: str) -> dict:
     """
@@ -25,20 +25,21 @@ def generate_career_roadmap(career: str, education_level: str, time_commitment: 
         }
 
     prompt = f"""
-    You are an expert AI Career Coach. Generate a detailed learning roadmap for becoming a {career}.
-    The user is currently a {education_level} and can commit to {time_commitment}.
+    You are an expert AI Career Coach and Technical Mentor. Generate a highly detailed and practical learning roadmap for becoming a {career}.
+    The user's current education level is {education_level} and they can commit to studying {time_commitment}.
+    Create exactly 4 to 6 comprehensive milestones. Each milestone must have 3-5 specific, actionable tasks, and 1 capstone project.
     Return the response EXCLUSIVELY as a valid JSON object with the following structure:
     {{
         "career": "{career}",
-        "description": "Brief description of the role",
+        "description": "Brief, motivating description of this career path.",
         "estimated_months": 6,
         "milestones": [
             {{
-                "title": "Milestone name (e.g., Programming Fundamentals)",
+                "title": "Milestone name (e.g., Advanced System Design)",
                 "duration": "e.g., 4 weeks",
-                "description": "What they will learn",
-                "tasks": ["Specific task 1", "Specific task 2"],
-                "projects": ["Project suggestion 1"]
+                "description": "What they will learn in this milestone",
+                "tasks": ["Specific actionable task 1", "Specific actionable task 2", "Specific actionable task 3"],
+                "projects": ["A concrete capstone project suggestion to solidify these skills"]
             }}
         ]
     }}

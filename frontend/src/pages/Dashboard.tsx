@@ -30,8 +30,11 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen p-8 flex items-center justify-center">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="w-16 h-16 bg-zinc-800 rounded-full mb-4"></div>
-          <div className="h-6 w-32 bg-zinc-800 rounded"></div>
+          <div className="w-16 h-16 bg-zinc-800 rounded-full mb-4 flex items-center justify-center">
+            <Flame className="w-8 h-8 text-amber-500 animate-bounce" />
+          </div>
+          <div className="h-6 w-32 bg-zinc-800 rounded mb-4"></div>
+          <p className="text-zinc-500 text-sm italic max-w-xs text-center">Waking up the Forge (Free Tier Server). This might take up to 50 seconds on the first load...</p>
         </div>
       </div>
     );
