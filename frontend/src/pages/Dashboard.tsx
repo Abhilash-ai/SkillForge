@@ -48,7 +48,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Welcome Header */}
-        <div className="flex justify-between items-end">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-0">
           <div>
             <h1 className="text-4xl font-extrabold font-['Outfit'] tracking-tight">
               The Forge Room
@@ -57,7 +57,7 @@ const Dashboard = () => {
               Welcome back to your workshop, <span className="text-amber-500 font-medium">{user?.firstName || 'Artisan'}</span>. Let's build your future.
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 w-full md:w-auto">
             <div className="forge-panel px-6 py-3 flex items-center gap-4">
               <div className="flex flex-col">
                 <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Rank</span>

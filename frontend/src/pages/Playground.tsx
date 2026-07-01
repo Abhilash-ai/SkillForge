@@ -46,19 +46,19 @@ const Playground = () => {
 
   return (
     <div className="h-screen flex flex-col bg-zinc-900 text-zinc-50">
-      <header className="px-6 py-4 border-b border-zinc-800 flex items-center justify-between bg-zinc-950">
+      <header className="px-4 md:px-6 py-4 border-b border-zinc-800 flex flex-col md:flex-row md:items-center justify-between bg-zinc-950 gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shrink-0">
             <Code2 className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Browser Coding Playground</h1>
+            <h1 className="text-lg md:text-xl font-bold tracking-tight">Browser Coding Playground</h1>
             <p className="text-xs text-zinc-400">Powered by Local Sandbox</p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4 w-full md:w-auto">
           <select 
-            className="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="flex-1 md:flex-none bg-zinc-800 border border-zinc-700 text-white rounded-lg px-2 md:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm md:text-base"
             value={language.id}
             onChange={(e) => handleLanguageChange(e.target.value)}
           >
@@ -69,16 +69,16 @@ const Playground = () => {
           <button 
             onClick={handleRunCode}
             disabled={isRunning}
-            className="px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-white font-bold flex items-center gap-2 transition-colors"
+            className="flex-1 md:flex-none px-4 md:px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-white font-bold flex items-center justify-center gap-2 transition-colors text-sm md:text-base"
           >
-            {isRunning ? <Loader2 className="w-5 h-5 animate-spin" /> : <Play className="w-5 h-5 fill-current" />}
-            Run Code
+            {isRunning ? <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" /> : <Play className="w-4 h-4 md:w-5 md:h-5 fill-current" />}
+            Run
           </button>
         </div>
       </header>
 
-      <div className="flex-1 flex overflow-hidden">
-        <div className="w-2/3 border-r border-zinc-800">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <div className="w-full md:w-2/3 h-1/2 md:h-full border-b md:border-b-0 md:border-r border-zinc-800">
           <Editor
             height="100%"
             language={language.id === 'cpp' ? 'cpp' : language.id}
@@ -93,17 +93,17 @@ const Playground = () => {
             }}
           />
         </div>
-        <div className="w-1/3 bg-zinc-950 flex flex-col">
-          <div className="px-4 py-3 border-b border-zinc-800 flex items-center gap-2 text-zinc-400 text-sm font-bold uppercase tracking-wider">
+        <div className="w-full md:w-1/3 h-1/2 md:h-full bg-zinc-950 flex flex-col">
+          <div className="px-4 py-3 border-b border-zinc-800 flex items-center gap-2 text-zinc-400 text-xs md:text-sm font-bold uppercase tracking-wider shrink-0">
             <Terminal className="w-4 h-4" /> Terminal Output
           </div>
-          <div className="p-4 flex-1 overflow-auto font-mono text-sm whitespace-pre-wrap">
+          <div className="p-4 flex-1 overflow-auto font-mono text-xs md:text-sm whitespace-pre-wrap">
             {isRunning ? (
               <span className="text-amber-500 animate-pulse">Executing...</span>
             ) : output ? (
               <span className="text-zinc-300">{output}</span>
             ) : (
-              <span className="text-zinc-600">Click "Run Code" to see output here.</span>
+              <span className="text-zinc-600">Click "Run" to see output here.</span>
             )}
           </div>
         </div>

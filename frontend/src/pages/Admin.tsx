@@ -68,34 +68,36 @@ const Admin = () => {
           <div className="p-6 border-b border-zinc-800 bg-zinc-900/50">
             <h2 className="text-xl font-bold">Recent User Signups</h2>
           </div>
-          <table className="w-full text-left">
-            <thead>
-              <tr className="bg-zinc-800/50 text-zinc-400 text-sm font-bold uppercase tracking-wider">
-                <th className="p-4 pl-6">User ID</th>
-                <th className="p-4">Email</th>
-                <th className="p-4">Role Target</th>
-                <th className="p-4">Joined</th>
-                <th className="p-4 pr-6 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-800">
-              {[1,2,3,4,5].map(i => (
-                <tr key={i} className="hover:bg-zinc-800/20 transition-colors">
-                  <td className="p-4 pl-6 font-mono text-sm text-zinc-300">usr_mock_{i}9x8z</td>
-                  <td className="p-4 font-medium">user{i}@example.com</td>
-                  <td className="p-4">
-                    <span className="px-2 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-md text-xs font-bold">
-                      Software Engineer
-                    </span>
-                  </td>
-                  <td className="p-4 text-zinc-400">{i} hr ago</td>
-                  <td className="p-4 pr-6 text-right">
-                    <button className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded text-sm font-medium transition-colors">View</button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-[800px]">
+              <thead>
+                <tr className="bg-zinc-800/50 text-zinc-400 text-sm font-bold uppercase tracking-wider">
+                  <th className="p-4 pl-6">User ID</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Role Target</th>
+                  <th className="p-4">Joined</th>
+                  <th className="p-4 pr-6 text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-zinc-800">
+                {[1,2,3,4,5].map(i => (
+                  <tr key={i} className="hover:bg-zinc-800/20 transition-colors">
+                    <td className="p-4 pl-6 font-mono text-sm text-zinc-300">usr_mock_{i}9x8z</td>
+                    <td className="p-4 font-medium">user{i}@example.com</td>
+                    <td className="p-4">
+                      <span className="px-2 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-md text-xs font-bold">
+                        Software Engineer
+                      </span>
+                    </td>
+                    <td className="p-4 text-zinc-400">{i} hr ago</td>
+                    <td className="p-4 pr-6 text-right">
+                      <button className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded text-sm font-medium transition-colors">View</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
