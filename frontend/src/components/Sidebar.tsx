@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Compass, Map, Terminal, Target, FileText, Briefcase, Users, Globe, ShieldAlert, Sparkles, X, Swords, Trophy } from 'lucide-react';
+import { LayoutDashboard, Compass, Map, Terminal, Target, FileText, Briefcase, Users, Globe, ShieldAlert, Sparkles, X, Swords, Trophy, Settings as SettingsIcon } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -22,6 +22,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     { name: 'Projects', path: '/projects', icon: Terminal },
     { name: 'Community', path: '/community', icon: Users },
     { name: 'Opportunities', path: '/opportunities', icon: Globe },
+    { name: 'Settings', path: '/settings', icon: SettingsIcon },
   ];
 
   return (

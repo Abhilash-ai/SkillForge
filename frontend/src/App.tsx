@@ -15,6 +15,7 @@ import Community from './pages/Community';
 import Opportunities from './pages/Opportunities';
 import BattleGround from './pages/BattleGround';
 import Leaderboard from './pages/Leaderboard';
+import Settings from './pages/Settings';
 import Layout from './components/Layout';
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_sample';
@@ -55,6 +56,7 @@ function App() {
             <Route path="/opportunities" element={<Opportunities />} />
             <Route path="/arena" element={<BattleGround />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>
       </BrowserRouter>

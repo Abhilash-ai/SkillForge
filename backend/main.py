@@ -284,10 +284,75 @@ from fastapi import UploadFile, File, Form
 import PyPDF2
 import io
 
-@app.post("/api/mentor/chat")
-def mentor_chat(req: ChatRequest):
-    reply = chat_with_mentor(req.message, [h.dict() for h in req.history])
-    return {"reply": reply}
+class MentorChatRequest(BaseModel):
+    clerk_id: str
+    message: str
+
+@app.get("/api/mentor/sessions")
+def get_sessions(clerk_id: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    sessions = db.query(models.ChatSession).filter(models.ChatSession.user_id == user.id).order_by(models.ChatSession.updated_at.desc()).all()
+    return [{"id": s.id, "title": s.title, "updated_at": s.updated_at} for s in sessions]
+
+@app.post("/api/mentor/sessions")
+def create_session(clerk_id: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    new_session = models.ChatSession(user_id=user.id, title="New Chat")
+    db.add(new_session)
+    db.commit()
+    db.refresh(new_session)
+    
+    # Add initial greeting
+    greeting = models.ChatMessage(session_id=new_session.id, role="model", content=f"Hello! I am your SkillForge AI Mentor. How can I help you today?")
+    db.add(greeting)
+    db.commit()
+    
+    return {"id": new_session.id, "title": new_session.title}
+
+@app.get("/api/mentor/sessions/{session_id}")
+def get_session_chat(session_id: int, db: Session = Depends(get_db)):
+    session = db.query(models.ChatSession).filter(models.ChatSession.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    messages = [{"role": m.role, "content": m.content} for m in session.messages]
+    return {"session": {"id": session.id, "title": session.title}, "messages": messages}
+
+@app.post("/api/mentor/sessions/{session_id}/chat")
+def chat_in_session(session_id: int, req: MentorChatRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == req.clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    session = db.query(models.ChatSession).filter(models.ChatSession.id == session_id, models.ChatSession.user_id == user.id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+        
+    # Append user message
+    user_msg = models.ChatMessage(session_id=session.id, role="user", content=req.message)
+    db.add(user_msg)
+    
+    # Update title if it's the first user message
+    if session.title == "New Chat":
+        session.title = req.message[:30] + ("..." if len(req.message) > 30 else "")
+        
+    db.commit()
+    
+    # Get history for AI
+    history = [{"role": m.role, "content": m.content} for m in session.messages[:-1]] # exclude the one we just added
+    
+    reply = chat_with_mentor(req.message, history)
+    
+    ai_msg = models.ChatMessage(session_id=session.id, role="model", content=reply)
+    db.add(ai_msg)
+    
+    session.updated_at = func.now()
+    db.commit()
+    
+    return {"reply": reply, "session_title": session.title}
 
 @app.post("/api/resume/analyze")
 async def process_resume(file: UploadFile = File(...), job_description: str = Form("")):
@@ -418,3 +483,17 @@ def get_leaderboard(db: Session = Depends(get_db)):
     # Returns top 50 users by XP
     users = db.query(models.User).order_by(models.User.xp_points.desc()).limit(50).all()
     return [{"clerk_id": u.clerk_id, "rank": u.rank, "xp_points": u.xp_points, "coins": u.coins, "streak": u.current_streak} for u in users]
+
+class ProfileUpdate(BaseModel):
+    interests: list[str]
+    topics: list[str]
+    profile_icon: str
+
+@app.put("/api/users/{clerk_id}/profile")
+def update_profile(clerk_id: str, data: ProfileUpdate, db: Session = Depends(get_db)):
+    user = get_or_create_user(clerk_id, db)
+    user.interests = json.dumps(data.interests)
+    user.topics = json.dumps(data.topics)
+    user.profile_icon = data.profile_icon
+    db.commit()
+    return {"message": "Profile updated"}
