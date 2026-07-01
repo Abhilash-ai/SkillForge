@@ -1,0 +1,147 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Search, Briefcase, TrendingUp, DollarSign, BookOpen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+const careersList = [
+  "Software Engineer",
+  "Data Scientist",
+  "AI/ML Engineer",
+  "Cybersecurity Analyst",
+  "Cloud Engineer",
+  "UI/UX Designer",
+  "Product Manager"
+];
+
+const Careers = () => {
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [insights, setInsights] = useState<any>(null);
+  const navigate = useNavigate();
+
+  const handleSearch = async (career: string) => {
+    setLoading(true);
+    setInsights(null);
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/careers/${encodeURIComponent(career)}`);
+      const data = await res.json();
+      setInsights(data);
+    } catch (err) {
+      console.error(err);
+      // Fallback data if backend is not running
+      setInsights({
+        career,
+        overview: "A highly sought-after role focused on solving complex problems.",
+        salary_range: "$80k - $160k",
+        demand: "Very High",
+        key_skills: ["Problem Solving", "Communication", "Technical Depth"],
+        top_companies: ["Google", "Microsoft", "Amazon"]
+      });
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 p-8">
+      <div className="max-w-6xl mx-auto">
+        <header className="mb-12">
+          <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-zinc-900">AI Career Discovery</h1>
+          <p className="text-zinc-600 text-lg">Explore roles, salary insights, and industry demand powered by AI.</p>
+        </header>
+
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="md:w-1/3">
+            <div className="bg-white p-6 rounded-3xl shadow-sm border border-zinc-200 sticky top-8">
+              <div className="relative mb-6">
+                <Search className="absolute left-4 top-3.5 text-zinc-400 w-5 h-5" />
+                <input 
+                  type="text" 
+                  placeholder="Search a career..." 
+                  className="w-full pl-12 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+              <h3 className="font-bold text-zinc-700 mb-4 uppercase tracking-wider text-sm">Popular Careers</h3>
+              <ul className="space-y-2">
+                {careersList.filter(c => c.toLowerCase().includes(search.toLowerCase())).map(c => (
+                  <li key={c}>
+                    <button 
+                      onClick={() => handleSearch(c)}
+                      className="w-full text-left px-4 py-3 rounded-xl hover:bg-rose-50 hover:text-rose-700 transition-colors font-medium flex items-center justify-between group"
+                    >
+                      {c}
+                      <Briefcase className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="md:w-2/3">
+            {loading ? (
+              <div className="h-96 bg-white rounded-3xl border border-zinc-200 shadow-sm flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-600"></div>
+              </div>
+            ) : insights ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-8"
+              >
+                <div className="inline-block px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 font-bold text-sm mb-6">
+                  {insights.demand} Demand
+                </div>
+                <h2 className="text-4xl font-extrabold mb-4">{insights.career}</h2>
+                <p className="text-zinc-600 text-lg leading-relaxed mb-8">{insights.overview}</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-lime-50 to-teal-50 border border-lime-100">
+                    <DollarSign className="w-8 h-8 text-lime-600 mb-2" />
+                    <h4 className="text-lime-900 font-bold mb-1">Salary Range</h4>
+                    <p className="text-2xl font-extrabold text-lime-700">{insights.salary_range}</p>
+                  </div>
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-rose-50 to-fuchsia-50 border border-rose-100">
+                    <TrendingUp className="w-8 h-8 text-rose-600 mb-2" />
+                    <h4 className="text-rose-900 font-bold mb-1">Top Companies</h4>
+                    <p className="text-rose-700 font-medium">{insights.top_companies?.join(', ')}</p>
+                  </div>
+                </div>
+
+                <div className="mb-8">
+                  <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-zinc-500" /> Core Skills Required
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {insights.key_skills?.map((skill: string) => (
+                      <span key={skill} className="px-4 py-2 bg-zinc-100 text-zinc-700 rounded-lg font-medium border border-zinc-200">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-zinc-100">
+                  <button 
+                    onClick={() => navigate(`/roadmap?career=${encodeURIComponent(insights.career)}`)}
+                    className="w-full py-4 rounded-xl bg-zinc-900 text-white font-bold text-lg hover:bg-zinc-800 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                  >
+                    Generate Personalized Roadmap <TrendingUp className="w-5 h-5" />
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="h-96 bg-white/50 backdrop-blur-sm rounded-3xl border border-zinc-200 border-dashed flex flex-col items-center justify-center text-zinc-400">
+                <Search className="w-12 h-12 mb-4 opacity-50" />
+                <p>Select or search a career to view AI insights.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Careers;

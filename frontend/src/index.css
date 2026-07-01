@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forge-primary: #D97706; /* Burnt Orange */
+  --color-forge-secondary: #F59E0B; /* Amber Gold */
+  --color-forge-accent: #B45309; /* Copper */
+  --color-forge-charcoal: #18181B; /* Deep Charcoal */
+  --color-forge-graphite: #27272A; /* Graphite */
+  --color-forge-beige: #F5F5F4; /* Warm Beige */
+  --color-forge-success: #10B981; /* Emerald */
+  --color-forge-warning: #DC2626; /* Crimson */
+  --color-forge-achievement: #8B5CF6; /* Violet */
+}
+
+@layer base {
+  :root {
+    --background: #F5F5F4;
+    --foreground: #18181B;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #18181B; /* Charcoal */
+      --foreground: #F5F5F4; /* Beige */
+    }
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+    /* Soft noise texture overlay */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .forge-card {
+    @apply bg-zinc-900 border border-zinc-800 rounded-[24px] shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .forge-panel {
+    @apply bg-[#27272A] border border-[#3F3F46] rounded-[20px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)];
+  }
+
+  .forge-button {
+    @apply active:scale-95 transition-transform shadow-[0_4px_14px_0_rgba(217,119,6,0.39)] hover:shadow-[0_6px_20px_rgba(217,119,6,0.23)] hover:-translate-y-[1px];
+  }
+
+  .text-forge-gradient {
+    @apply bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent;
+  }
+}
+
+@keyframes forge-flow {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.animate-forge-flow {
+  background-size: 200% auto;
+  animation: forge-flow 3s linear infinite;
+}
+
+@keyframes spark {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-20px) scale(0); opacity: 0; }
+}
+
+.animate-spark {
+  animation: spark 0.8s ease-out forwards;
+}
