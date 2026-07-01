@@ -1,5 +1,7 @@
 # SkillForge 🚀
 
+**🌍 Live Demo:** [https://skillforgeapp.vercel.app/](https://skillforgeapp.vercel.app/)
+
 SkillForge is a full-stack, AI-powered career and skill development platform designed to help users map out their learning journeys, test their coding skills, and get intelligent career insights. 
 
 ## ✨ Key Features
