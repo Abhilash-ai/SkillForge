@@ -1,49 +1,76 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Target, CheckCircle, ArrowRight, Award, Hammer, Flame } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Target, CheckCircle, ArrowRight, Hammer, Flame, Layout, Server, Settings, Code, Database, Globe } from 'lucide-react';
 import { useUser } from '@clerk/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
+const CATEGORIES = [
+  { id: 'Frontend Development', icon: Layout, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+  { id: 'Backend Development', icon: Server, color: 'text-green-500', bg: 'bg-green-500/10' },
+  { id: 'DevOps & Cloud', icon: Settings, color: 'text-orange-500', bg: 'bg-orange-500/10' },
+  { id: 'Data Structures & Algorithms', icon: Code, color: 'text-red-500', bg: 'bg-red-500/10' },
+  { id: 'Databases', icon: Database, color: 'text-purple-500', bg: 'bg-purple-500/10' },
+  { id: 'Web Security', icon: Globe, color: 'text-emerald-500', bg: 'bg-emerald-500/10' }
+];
+
 const Assessment = () => {
   const { user } = useUser();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const topic = searchParams.get('topic') || 'Software Engineering';
-
+  
+  const initialCategory = searchParams.get('topic');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
+  
   const [questions, setQuestions] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
+  
+  const [score, setScore] = useState(0); // Tracks raw score (+4 / -1)
+  const [correctCount, setCorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
   
   const [showResult, setShowResult] = useState(false);
   const [resultData, setResultData] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const res = await fetch(`/api/assessments/questions?topic=${encodeURIComponent(topic)}`);
-        const data = await res.json();
-        if (data.questions) {
-          setQuestions(data.questions);
+    if (selectedCategory) {
+      setLoading(true);
+      const fetchQuestions = async () => {
+        try {
+          const res = await fetch(`/api/assessments/questions?topic=${encodeURIComponent(selectedCategory)}`);
+          const data = await res.json();
+          if (data.questions) {
+            setQuestions(data.questions);
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchQuestions();
-  }, [topic]);
+      };
+      fetchQuestions();
+    }
+  }, [selectedCategory]);
+
+  const handleSelectCategory = (categoryId: string) => {
+    setSearchParams({ topic: categoryId });
+    setSelectedCategory(categoryId);
+  };
 
   const handleNext = async () => {
     let currentScore = score;
+    
     if (selected === questions[currentIdx].correct) {
-      currentScore += 1;
-      setScore(currentScore);
+      currentScore += 4;
+      setCorrectCount(c => c + 1);
+    } else {
+      currentScore -= 1;
+      setWrongCount(w => w + 1);
     }
+    setScore(currentScore);
     
     if (currentIdx < questions.length - 1) {
       setCurrentIdx(i => i + 1);
@@ -51,14 +78,18 @@ const Assessment = () => {
     } else {
       // Finished, submit to backend
       setSubmitting(true);
-      const percentage = Math.round((currentScore / questions.length) * 100);
+      
+      const maxPossibleScore = questions.length * 4;
+      const finalScore = Math.max(0, currentScore);
+      const percentage = Math.round((finalScore / maxPossibleScore) * 100);
+      
       try {
         const res = await fetch('/api/assessments/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             clerk_id: user?.id,
-            topic: topic,
+            topic: selectedCategory,
             score_percentage: percentage
           })
         });
@@ -81,6 +112,40 @@ const Assessment = () => {
     return { title: "Apprentice", color: "from-orange-700 to-rose-900" };
   };
 
+  if (!selectedCategory) {
+    return (
+      <div className="min-h-screen p-8 text-zinc-100 max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
+            <Target className="w-8 h-8 text-amber-500" />
+          </div>
+          <h1 className="text-4xl font-black font-['Outfit'] mb-4">Choose Your Proving Ground</h1>
+          <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+            Select a domain to test your knowledge. Be warned: every correct strike earns <span className="text-emerald-500 font-bold">+4 points</span>, but a miss will cost you <span className="text-red-500 font-bold">-1 point</span>.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {CATEGORIES.map(cat => (
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              key={cat.id}
+              onClick={() => handleSelectCategory(cat.id)}
+              className="forge-card p-6 cursor-pointer hover:border-amber-500/50 hover:bg-zinc-800/80 transition-all flex flex-col items-center text-center group"
+            >
+              <div className={`w-16 h-16 rounded-2xl ${cat.bg} flex items-center justify-center mb-4 transition-transform group-hover:-translate-y-2`}>
+                <cat.icon className={`w-8 h-8 ${cat.color}`} />
+              </div>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-amber-500 transition-colors">{cat.id}</h3>
+              <p className="text-zinc-500 text-sm">Generate 10 dynamic questions to test your proficiency in {cat.id}.</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#18181B] flex flex-col items-center justify-center text-zinc-100">
@@ -89,24 +154,27 @@ const Assessment = () => {
           <Flame className="w-16 h-16 text-amber-500 mb-6 animate-pulse relative z-10" />
         </div>
         <h2 className="text-3xl font-black font-['Outfit'] mb-2">Stoking the Forge...</h2>
-        <p className="text-zinc-400">Heating up the metal for your test.</p>
+        <p className="text-zinc-400">Heating up the metal for your test in {selectedCategory}.</p>
       </div>
     );
   }
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen p-8 text-zinc-100 flex items-center justify-center">
+      <div className="min-h-screen p-8 text-zinc-100 flex flex-col items-center justify-center">
         <div className="forge-card p-8 text-center">
            <h2 className="text-2xl font-bold font-['Outfit'] text-red-500 mb-2">Forging Failed</h2>
-           <p className="text-zinc-400">Could not generate questions. The fire is too weak today.</p>
+           <p className="text-zinc-400 mb-6">Could not generate questions. The fire is too weak today.</p>
+           <button onClick={() => setSelectedCategory(null)} className="forge-button px-6 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700">Choose Another Category</button>
         </div>
       </div>
     );
   }
 
   if (showResult || submitting) {
-    const percentage = (score / questions.length) * 100;
+    const maxPossibleScore = questions.length * 4;
+    const finalScore = Math.max(0, score);
+    const percentage = (finalScore / maxPossibleScore) * 100;
     const rank = getRank(percentage);
 
     return (
@@ -116,7 +184,6 @@ const Assessment = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="forge-card p-10 max-w-md w-full text-center relative overflow-hidden"
         >
-          {/* Background Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-amber-500/20 rounded-full blur-[80px] pointer-events-none"></div>
           
           <div className="relative z-10">
@@ -126,7 +193,7 @@ const Assessment = () => {
             <h2 className="text-3xl font-black font-['Outfit'] mb-2">
               {submitting ? 'Cooling the Blade...' : 'Forging Complete'}
             </h2>
-            <p className="text-zinc-400 mb-8 font-medium">Your skills have been tested in the fires of the forge.</p>
+            <p className="text-zinc-400 mb-8 font-medium">Your skills in {selectedCategory} have been tested.</p>
             
             {!submitting && (
               <>
@@ -142,21 +209,29 @@ const Assessment = () => {
 
                 <div className="space-y-4 mb-8 text-left">
                   <div className="flex justify-between p-4 rounded-xl bg-[#27272A] border border-[#3F3F46]">
-                    <span className="text-zinc-400 font-medium">Accuracy</span>
-                    <span className="font-bold text-amber-500">{Math.round(percentage)}%</span>
+                    <span className="text-zinc-400 font-medium">Final Score</span>
+                    <span className="font-bold text-amber-500">{finalScore} / {maxPossibleScore} pts</span>
                   </div>
                   <div className="flex justify-between p-4 rounded-xl bg-[#27272A] border border-[#3F3F46]">
-                    <span className="text-zinc-400 font-medium">Successful Strikes</span>
-                    <span className="font-bold text-zinc-200">{score} / {questions.length}</span>
+                    <span className="text-zinc-400 font-medium">Correct / Wrong</span>
+                    <span className="font-bold text-zinc-200"><span className="text-emerald-500">{correctCount}</span> / <span className="text-red-500">{wrongCount}</span></span>
                   </div>
                 </div>
 
-                <button 
-                  onClick={() => navigate('/')}
-                  className="forge-button w-full py-4 rounded-xl bg-zinc-800 border border-zinc-700 text-white font-bold hover:bg-zinc-700 transition-colors"
-                >
-                  Return to Dashboard
-                </button>
+                <div className="flex gap-4">
+                  <button 
+                    onClick={() => { setSelectedCategory(null); setShowResult(false); setScore(0); setCorrectCount(0); setWrongCount(0); setCurrentIdx(0); }}
+                    className="flex-1 py-4 rounded-xl bg-zinc-800 border border-zinc-700 text-white font-bold hover:bg-zinc-700 transition-colors"
+                  >
+                    New Assessment
+                  </button>
+                  <button 
+                    onClick={() => navigate('/dashboard')}
+                    className="flex-1 py-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold hover:from-amber-500 hover:to-amber-600 transition-colors"
+                  >
+                    Dashboard
+                  </button>
+                </div>
               </>
             )}
           </div>
@@ -169,13 +244,18 @@ const Assessment = () => {
 
   return (
     <div className="min-h-screen p-8 text-zinc-100 flex items-center justify-center">
-      <div className="max-w-2xl w-full">
-        <div className="mb-10 flex items-center justify-between">
-          <div className="flex items-center gap-3 text-amber-500 font-bold bg-amber-500/10 px-5 py-2.5 rounded-full border border-amber-500/20">
-            <Flame className="w-5 h-5" /> The Proving Grounds
-          </div>
-          <div className="text-zinc-400 font-bold font-['Outfit'] tracking-widest uppercase text-sm">
-            Strike {currentIdx + 1} of {questions.length}
+      <div className="max-w-3xl w-full">
+        <div className="mb-8 flex items-center justify-between">
+          <button onClick={() => setSelectedCategory(null)} className="text-zinc-400 hover:text-white transition-colors">
+            ← Change Category
+          </button>
+          <div className="flex items-center gap-4">
+            <div className="text-zinc-400 font-bold bg-zinc-900 px-4 py-2 rounded-lg border border-zinc-800">
+              Score: <span className={score >= 0 ? 'text-amber-500' : 'text-red-500'}>{score}</span> pts
+            </div>
+            <div className="text-zinc-400 font-bold font-['Outfit'] tracking-widest uppercase text-sm">
+              Strike {currentIdx + 1} of {questions.length}
+            </div>
           </div>
         </div>
 
@@ -183,9 +263,14 @@ const Assessment = () => {
           key={currentIdx}
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          className="forge-card p-10"
+          className="forge-card p-10 relative overflow-hidden"
         >
-          <h3 className="text-3xl font-black font-['Outfit'] text-zinc-100 mb-10 leading-tight">
+          <div className="absolute top-0 right-0 p-4 flex gap-2">
+            <span className="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">+4 if correct</span>
+            <span className="text-xs font-bold text-red-500 bg-red-500/10 px-2 py-1 rounded border border-red-500/20">-1 if wrong</span>
+          </div>
+
+          <h3 className="text-3xl font-black font-['Outfit'] text-zinc-100 mb-10 mt-4 leading-tight">
             {q.question}
           </h3>
 
@@ -214,9 +299,9 @@ const Assessment = () => {
             <button
               onClick={handleNext}
               disabled={selected === null}
-              className="forge-button px-8 py-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+              className="forge-button px-8 py-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2 shadow-lg shadow-amber-900/20"
             >
-              {currentIdx === questions.length - 1 ? 'Quench Blade' : 'Strike Anvil'} 
+              {currentIdx === questions.length - 1 ? 'Quench Blade (Finish)' : 'Strike Anvil (Next)'} 
               <Hammer className="w-5 h-5" />
             </button>
           </div>
