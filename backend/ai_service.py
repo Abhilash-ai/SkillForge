@@ -59,7 +59,7 @@ def generate_career_roadmap(career: str, education_level: str, time_commitment: 
         return json.loads(text.strip())
     except Exception as e:
         print(f"Error generating roadmap: {e}")
-        return {"error": "Failed to generate roadmap from AI."}
+        return {"error": f"Failed to generate roadmap: {str(e)}"}
 
 def get_career_insights(career: str) -> dict:
     """
@@ -100,7 +100,7 @@ def get_career_insights(career: str) -> dict:
         return json.loads(text.strip())
     except Exception as e:
         print(f"Error generating insights: {e}")
-        return {"error": "Failed to get insights"}
+        return {"error": f"Failed to get insights: {str(e)}"}
 
 def chat_with_mentor(message: str, history: list) -> str:
     """
