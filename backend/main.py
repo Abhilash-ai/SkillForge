@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 import uvicorn
 import os
 from dotenv import load_dotenv
+from typing import List, Optional, Dict, Any
 
 import models
 import schemas
@@ -27,7 +28,11 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to SkillForge API"}
+    from ai_service import api_key
+    return {
+        "message": "Welcome to SkillForge API",
+        "ai_configured": bool(api_key)
+    }
 
 def get_or_create_user(clerk_id: str, db: Session):
     user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
