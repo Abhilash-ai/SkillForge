@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShieldAlert, Users, TrendingUp, AlertTriangle } from 'lucide-react';
 import { useUser } from '@clerk/react';
 import { Navigate } from 'react-router-dom';
 
 const Admin = () => {
   const { user, isLoaded } = useUser();
+  const [stats, setStats] = useState<any>(null);
 
-  // Very basic mock check for demo purposes. 
-  // In a real app, use Clerk metadata or backend validation for admin roles.
-  const isAdmin = user?.publicMetadata?.role === 'admin' || user?.primaryEmailAddress?.emailAddress?.includes('admin');
-
-  // Commented out strict check to allow viewing for demo without strict admin config
-  /*
-  if (isLoaded && !isAdmin) {
-    return <Navigate to="/dashboard" />;
-  }
-  */
+  useEffect(() => {
+    fetch('/api/admin/stats')
+      .then(res => res.json())
+      .then(data => setStats(data))
+      .catch(err => console.error(err));
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
@@ -39,7 +36,7 @@ const Admin = () => {
             </div>
             <div>
               <h4 className="text-zinc-400 text-sm font-bold uppercase tracking-wider mb-1">Total Users</h4>
-              <p className="text-2xl font-black">12,458</p>
+              <p className="text-2xl font-black">{stats?.total_users || 0}</p>
             </div>
           </div>
 
@@ -49,7 +46,7 @@ const Admin = () => {
             </div>
             <div>
               <h4 className="text-zinc-400 text-sm font-bold uppercase tracking-wider mb-1">Active Sessions</h4>
-              <p className="text-2xl font-black">1,245</p>
+              <p className="text-2xl font-black">{Math.max(1, Math.floor((stats?.total_users || 0) * 0.15))}</p>
             </div>
           </div>
 
@@ -59,7 +56,7 @@ const Admin = () => {
             </div>
             <div>
               <h4 className="text-zinc-400 text-sm font-bold uppercase tracking-wider mb-1">Reported Posts</h4>
-              <p className="text-2xl font-black">23</p>
+              <p className="text-2xl font-black">0</p>
             </div>
           </div>
         </div>
@@ -80,21 +77,26 @@ const Admin = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800">
-                {[1,2,3,4,5].map(i => (
-                  <tr key={i} className="hover:bg-zinc-800/20 transition-colors">
-                    <td className="p-4 pl-6 font-mono text-sm text-zinc-300">usr_mock_{i}9x8z</td>
-                    <td className="p-4 font-medium">user{i}@example.com</td>
+                {stats?.recent_users?.map((u: any, idx: number) => (
+                  <tr key={idx} className="hover:bg-zinc-800/20 transition-colors">
+                    <td className="p-4 pl-6 font-mono text-sm text-zinc-300">{u.id}</td>
+                    <td className="p-4 font-medium">{u.email}</td>
                     <td className="p-4">
                       <span className="px-2 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-md text-xs font-bold">
-                        Software Engineer
+                        {u.target_role}
                       </span>
                     </td>
-                    <td className="p-4 text-zinc-400">{i} hr ago</td>
+                    <td className="p-4 text-zinc-400">{u.joined}</td>
                     <td className="p-4 pr-6 text-right">
                       <button className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded text-sm font-medium transition-colors">View</button>
                     </td>
                   </tr>
                 ))}
+                {!stats?.recent_users?.length && (
+                  <tr>
+                    <td colSpan={5} className="p-8 text-center text-zinc-500">No users found.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

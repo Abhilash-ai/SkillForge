@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Code2, Users, FileQuestion, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const companies = [
   { name: 'Google', color: 'text-orange-500', bg: 'bg-orange-50' },
@@ -11,6 +12,8 @@ const companies = [
 ];
 
 const Placement = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
       <div className="max-w-6xl mx-auto">
@@ -24,7 +27,11 @@ const Placement = () => {
         </header>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <motion.div whileHover={{ y: -5 }} className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group cursor-pointer">
+          <motion.div 
+            whileHover={{ y: -5 }} 
+            onClick={() => navigate('/assessment?topic=Data Structures and Algorithms')}
+            className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group cursor-pointer"
+          >
             <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
             <Code2 className="w-12 h-12 text-orange-400 mb-6" />
             <h2 className="text-2xl font-bold mb-3">DSA & Problem Solving</h2>
@@ -34,7 +41,11 @@ const Placement = () => {
             </div>
           </motion.div>
 
-          <motion.div whileHover={{ y: -5 }} className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group cursor-pointer">
+          <motion.div 
+            whileHover={{ y: -5 }} 
+            onClick={() => navigate('/assessment?topic=Behavioral and HR Interviews')}
+            className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group cursor-pointer"
+          >
             <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110" />
             <Users className="w-12 h-12 text-rose-400 mb-6" />
             <h2 className="text-2xl font-bold mb-3">HR & Behavioral</h2>
@@ -55,6 +66,7 @@ const Placement = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
+              onClick={() => navigate(`/careers`)}
               className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-zinc-800 transition-colors cursor-pointer"
             >
               <div className={`w-12 h-12 rounded-full ${company.bg} ${company.color} flex items-center justify-center font-black text-xl mb-3`}>

@@ -122,7 +122,7 @@ def chat_with_mentor(message: str, history: list) -> str:
     Mentor:
     """
     try:
-        response = model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+        response = model.generate_content(prompt)
         return response.text.strip()
     except Exception as e:
         print(f"Error with mentor chat: {e}")

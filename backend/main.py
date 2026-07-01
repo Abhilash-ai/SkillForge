@@ -320,7 +320,21 @@ def create_community_reply(post_id: int, reply: schemas.CommunityReplyCreate, cl
     db.refresh(db_reply)
     return db_reply
 
+@app.get("/api/admin/stats")
+def get_admin_stats(db: Session = Depends(get_db)):
+    users = db.query(models.User).order_by(models.User.id.desc()).limit(10).all()
+    total_users = db.query(models.User).count()
+    return {
+        "total_users": total_users,
+        "recent_users": [
+            {
+                "id": u.clerk_id,
+                "email": f"user_{u.id}@skillforge.local", # placeholder since we don't store email in basic model
+                "target_role": u.dream_career or "Undecided",
+                "joined": "Recently"
+            } for u in users
+        ]
+    }
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
-
-
