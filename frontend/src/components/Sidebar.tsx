@@ -20,7 +20,6 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     { name: 'Projects', path: '/projects', icon: Terminal },
     { name: 'Community', path: '/community', icon: Users },
     { name: 'Opportunities', path: '/opportunities', icon: Globe },
-    { name: 'Admin Panel', path: '/admin', icon: ShieldAlert },
   ];
 
   return (

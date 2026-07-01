@@ -13,7 +13,6 @@ import Placement from './pages/Placement';
 import Projects from './pages/Projects';
 import Community from './pages/Community';
 import Opportunities from './pages/Opportunities';
-import Admin from './pages/Admin';
 import Layout from './components/Layout';
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_sample';
@@ -52,7 +51,6 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/community" element={<Community />} />
             <Route path="/opportunities" element={<Opportunities />} />
-            <Route path="/admin" element={<Admin />} />
           </Route>
         </Routes>
       </BrowserRouter>
