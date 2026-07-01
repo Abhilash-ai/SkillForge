@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Compass, Map, Terminal, Target, FileText, Briefcase, Users, Globe, ShieldAlert, Sparkles, X } from 'lucide-react';
+import { LayoutDashboard, Compass, Map, Terminal, Target, FileText, Briefcase, Users, Globe, ShieldAlert, Sparkles, X, Swords, Trophy } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,6 +17,8 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     { name: 'Assessment', path: '/assessment', icon: Target },
     { name: 'Resume Analyzer', path: '/resume', icon: FileText },
     { name: 'Placement Prep', path: '/placement', icon: Briefcase },
+    { name: 'Battle Ground', path: '/arena', icon: Swords },
+    { name: 'Scoreboard', path: '/leaderboard', icon: Trophy },
     { name: 'Projects', path: '/projects', icon: Terminal },
     { name: 'Community', path: '/community', icon: Users },
     { name: 'Opportunities', path: '/opportunities', icon: Globe },
