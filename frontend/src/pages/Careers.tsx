@@ -25,6 +25,11 @@ const Careers = () => {
     try {
       const res = await fetch(`/api/careers/${encodeURIComponent(career)}`);
       const data = await res.json();
+      
+      if (!res.ok || data.error) {
+        throw new Error(data.error || 'Failed to fetch insights');
+      }
+      
       setInsights(data);
     } catch (err) {
       console.error(err);
