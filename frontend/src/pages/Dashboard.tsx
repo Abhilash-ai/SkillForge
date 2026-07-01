@@ -11,7 +11,7 @@ const Dashboard = () => {
     if (isLoaded && user) {
       const fetchDashboard = async () => {
         try {
-          const res = await fetch(`http://127.0.0.1:8000/api/users/${user.id}/dashboard`);
+          const res = await fetch(`/api/users/${user.id}/dashboard`);
           if (res.ok) {
             const data = await res.json();
             setDashboardData(data);

@@ -18,7 +18,7 @@ const ResumeAnalyzer = () => {
     formData.append('job_description', jobDesc);
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/resume/analyze', {
+      const res = await fetch('/api/resume/analyze', {
         method: 'POST',
         body: formData
       });

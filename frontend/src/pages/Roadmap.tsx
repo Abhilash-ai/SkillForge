@@ -18,7 +18,7 @@ const Roadmap = () => {
       const loadRoadmap = async () => {
         try {
           // 1. Check if user already has an active roadmap
-          const res = await fetch(`http://127.0.0.1:8000/api/users/${user.id}/roadmap`);
+          const res = await fetch(`/api/users/${user.id}/roadmap`);
           if (res.ok) {
             const data = await res.json();
             if (data && (!urlCareer || data.career.toLowerCase() === urlCareer.toLowerCase())) {
@@ -34,7 +34,7 @@ const Roadmap = () => {
             payload.career = urlCareer;
           }
           
-          const genRes = await fetch('http://127.0.0.1:8000/api/roadmaps/generate', {
+          const genRes = await fetch('/api/roadmaps/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)

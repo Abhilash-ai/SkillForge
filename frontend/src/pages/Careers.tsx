@@ -23,7 +23,7 @@ const Careers = () => {
     setLoading(true);
     setInsights(null);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/careers/${encodeURIComponent(career)}`);
+      const res = await fetch(`/api/careers/${encodeURIComponent(career)}`);
       const data = await res.json();
       setInsights(data);
     } catch (err) {

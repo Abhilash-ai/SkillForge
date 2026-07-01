@@ -24,7 +24,7 @@ const Assessment = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/assessments/questions?topic=${encodeURIComponent(topic)}`);
+        const res = await fetch(`/api/assessments/questions?topic=${encodeURIComponent(topic)}`);
         const data = await res.json();
         if (data.questions) {
           setQuestions(data.questions);
@@ -53,7 +53,7 @@ const Assessment = () => {
       setSubmitting(true);
       const percentage = Math.round((currentScore / questions.length) * 100);
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/assessments/submit', {
+        const res = await fetch('/api/assessments/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
