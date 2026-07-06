@@ -70,7 +70,7 @@ const ResumeAnalyzer = () => {
                     className="absolute inset-0 opacity-0 cursor-pointer"
                     onChange={e => e.target.files && setFile(e.target.files[0])}
                   />
-                  <UploadCloud className="w-10 h-10 text-zinc-400 mx-auto mb-3" />
+                  <UploadCloud className="w-10 h-10 text-zinc-600 dark:text-zinc-400 mx-auto mb-3" />
                   <p className="text-sm text-zinc-600 font-medium">
                     {file ? file.name : "Drag & drop or click to browse"}
                   </p>
@@ -143,7 +143,7 @@ const ResumeAnalyzer = () => {
                 </div>
               </motion.div>
             ) : (
-              <div className="h-full bg-zinc-100 rounded-3xl border-2 border-dashed border-zinc-300 flex items-center justify-center p-8 text-center text-zinc-400">
+              <div className="h-full bg-zinc-100 rounded-3xl border-2 border-dashed border-zinc-300 flex items-center justify-center p-8 text-center text-zinc-600 dark:text-zinc-400">
                 <p>Upload a resume and job description to see your ATS score and personalized improvements.</p>
               </div>
             )}

@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 import uvicorn
 import os
 from dotenv import load_dotenv
@@ -70,6 +71,37 @@ def get_or_create_user(clerk_id: str, db: Session):
             db.refresh(user)
             
     return user
+
+class UserSync(BaseModel):
+    clerk_id: str
+    email: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+
+@app.post("/api/users/sync")
+def sync_user(data: UserSync, db: Session = Depends(get_db)):
+    user = get_or_create_user(data.clerk_id, db)
+    if data.first_name and not user.first_name:
+        user.first_name = data.first_name
+    if data.last_name and not user.last_name:
+        user.last_name = data.last_name
+    db.commit()
+    db.refresh(user)
+    return {"user": {
+        "clerk_id": user.clerk_id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "bio": user.bio,
+        "github_url": user.github_url,
+        "linkedin_url": user.linkedin_url,
+        "interests": user.interests,
+        "topics": user.topics,
+        "profile_icon": user.profile_icon,
+        "xp_points": user.xp_points,
+        "coins": user.coins,
+        "current_streak": user.current_streak,
+        "rank": user.rank
+    }}
 
 @app.post("/api/onboarding", response_model=schemas.User)
 def save_onboarding(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -482,9 +514,23 @@ def submit_solution(question_id: int, submission: CodeSubmission, clerk_id: str,
 def get_leaderboard(db: Session = Depends(get_db)):
     # Returns top 50 users by XP
     users = db.query(models.User).order_by(models.User.xp_points.desc()).limit(50).all()
-    return [{"clerk_id": u.clerk_id, "rank": u.rank, "xp_points": u.xp_points, "coins": u.coins, "streak": u.current_streak} for u in users]
+    return [{
+        "clerk_id": u.clerk_id, 
+        "first_name": u.first_name,
+        "last_name": u.last_name,
+        "profile_icon": u.profile_icon,
+        "rank": u.rank, 
+        "xp_points": u.xp_points, 
+        "coins": u.coins, 
+        "streak": u.current_streak
+    } for u in users]
 
 class ProfileUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    bio: str | None = None
+    github_url: str | None = None
+    linkedin_url: str | None = None
     interests: list[str]
     topics: list[str]
     profile_icon: str
@@ -492,8 +538,61 @@ class ProfileUpdate(BaseModel):
 @app.put("/api/users/{clerk_id}/profile")
 def update_profile(clerk_id: str, data: ProfileUpdate, db: Session = Depends(get_db)):
     user = get_or_create_user(clerk_id, db)
+    user.first_name = data.first_name
+    user.last_name = data.last_name
+    user.bio = data.bio
+    user.github_url = data.github_url
+    user.linkedin_url = data.linkedin_url
     user.interests = json.dumps(data.interests)
     user.topics = json.dumps(data.topics)
     user.profile_icon = data.profile_icon
     db.commit()
     return {"message": "Profile updated"}
+
+@app.get("/api/users/{clerk_id}/profile")
+def get_profile(clerk_id: str, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.clerk_id == clerk_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    return {
+        "clerk_id": user.clerk_id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "bio": user.bio,
+        "github_url": user.github_url,
+        "linkedin_url": user.linkedin_url,
+        "interests": user.interests,
+        "topics": user.topics,
+        "profile_icon": user.profile_icon,
+        "xp_points": user.xp_points,
+        "coins": user.coins,
+        "current_streak": user.current_streak,
+        "rank": user.rank,
+        "created_at": user.created_at.isoformat() if user.created_at else None
+    }
+
+@app.get("/api/search")
+def search_global(q: str = "", db: Session = Depends(get_db)):
+    if not q or len(q.strip()) < 2:
+        return {"users": []}
+        
+    query_str = f"%{q.strip()}%"
+    
+    users = db.query(models.User).filter(
+        or_(
+            models.User.first_name.ilike(query_str),
+            models.User.last_name.ilike(query_str),
+            models.User.clerk_id.ilike(query_str)
+        )
+    ).limit(5).all()
+    
+    return {
+        "users": [{
+            "clerk_id": u.clerk_id,
+            "first_name": u.first_name,
+            "last_name": u.last_name,
+            "profile_icon": u.profile_icon,
+            "rank": u.rank
+        } for u in users]
+    }

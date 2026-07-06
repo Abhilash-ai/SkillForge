@@ -2,28 +2,30 @@
 
 **🌍 Live Demo:** [https://skillforgeapp.vercel.app/](https://skillforgeapp.vercel.app/)
 
-SkillForge is a full-stack, AI-powered career and skill development platform designed to help users map out their learning journeys, test their coding skills, and get intelligent career insights. 
+SkillForge is a full-stack, AI-powered career and skill development platform designed to help users map out their learning journeys, test their coding skills, compete in coding arenas, and get intelligent career insights. 
 
 ## ✨ Key Features
-- **AI Career Insights:** Powered by Google Gemini 2.5 Flash, users can discover potential career paths, salary expectations, and day-in-the-life insights based on their interests.
-- **Dynamic AI Roadmaps:** Generates structured, step-by-step learning roadmaps for any technical skill, completely tailored to the user's current level.
+- **AI Mentor & Chat History:** Persistent, intelligent career and coding mentor powered by Google Gemini. Your chats are saved so you can pick up exactly where you left off.
+- **Battle Ground Arena:** Compete against other developers in a real-time coding arena and earn points to climb the global leaderboard.
+- **Adaptive Assessments:** Test your knowledge in specific Software Engineering and AI domains. Questions adapt dynamically based on your profile interests to help build your confidence.
+- **Dynamic AI Roadmaps:** Generates structured, step-by-step learning roadmaps for any technical skill, completely tailored to your current level.
 - **Interactive Coding Playground:** A built-in code execution sandbox that natively compiles and runs Python and Node.js code directly on the backend.
-- **Resume Analyzer & Mentor:** Upload a PDF resume to get instant, AI-driven critique, formatting suggestions, and mock interview questions.
-- **Modern User Interface:** A highly responsive, glassmorphic UI built with React, Tailwind CSS, and Framer Motion.
+- **Profile Settings & Global Theme:** Customize your avatar, select your primary tech stacks to personalize your assessments, and seamlessly toggle between a stunning Light and Dark Mode UI.
+- **Resume Analyzer:** Upload a PDF resume to get instant, AI-driven critique, formatting suggestions, and mock interview questions.
 
 ## 🛠️ Technology Stack
 **Frontend:**
 - React 19 & TypeScript
 - Vite for fast bundling
-- Tailwind CSS v4 & Framer Motion for styling and animations
+- Tailwind CSS v4 & Framer Motion for styling and beautiful micro-animations
 - Zustand for state management
 - Clerk for secure authentication
 - Monaco Editor for the coding playground
 
 **Backend:**
 - FastAPI & Python 3.10
-- PostgreSQL with SQLAlchemy ORM for data persistence
-- Google Gemini API (`gemini-2.5-flash` & `gemini-2.5-flash-lite`) for all AI generation
+- SQLite with SQLAlchemy ORM for data persistence (Chat History, User Profiles, Leaderboards)
+- Google Gemini API (`gemini-3.5-flash`) for all advanced AI generation
 - Python `subprocess` engine for secure code execution
 
 ## 🚀 Live Deployment

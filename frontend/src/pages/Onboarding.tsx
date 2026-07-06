@@ -38,14 +38,14 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white dark:bg-zinc-900 text-zinc-50 flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-xl bg-zinc-800 rounded-3xl p-8 border border-zinc-700 shadow-2xl"
+        className="w-full max-w-xl bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-8 border border-zinc-300 dark:border-zinc-700 shadow-2xl"
       >
         <div className="mb-8">
-          <div className="flex items-center justify-between text-sm text-zinc-400 mb-2">
+          <div className="flex items-center justify-between text-sm text-zinc-600 dark:text-zinc-400 mb-2">
             <span>Step {step} of 3</span>
             <span>{Math.round((step / 3) * 100)}% Completed</span>
           </div>
@@ -62,7 +62,7 @@ const Onboarding = () => {
         {step === 1 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h2 className="text-2xl font-bold mb-2">Welcome to SkillForge, {user?.firstName}!</h2>
-            <p className="text-zinc-400 mb-6">Let's personalize your experience. What is your current education level?</p>
+            <p className="text-zinc-600 dark:text-zinc-400 mb-6">Let's personalize your experience. What is your current education level?</p>
             
             <div className="space-y-3">
               {['High School', 'College Student', 'Fresh Graduate', 'Self Learner'].map(opt => (
@@ -81,7 +81,7 @@ const Onboarding = () => {
         {step === 2 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h2 className="text-2xl font-bold mb-2">What is your dream career?</h2>
-            <p className="text-zinc-400 mb-6">This helps us build your personalized roadmap.</p>
+            <p className="text-zinc-600 dark:text-zinc-400 mb-6">This helps us build your personalized roadmap.</p>
             
             <div className="grid grid-cols-2 gap-3">
               {['Software Engineer', 'Data Scientist', 'UI/UX Designer', 'Product Manager', 'Cybersecurity', 'Cloud Engineer'].map(opt => (
@@ -100,7 +100,7 @@ const Onboarding = () => {
         {step === 3 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h2 className="text-2xl font-bold mb-2">How much time can you commit?</h2>
-            <p className="text-zinc-400 mb-6">We'll schedule your weekly milestones accordingly.</p>
+            <p className="text-zinc-600 dark:text-zinc-400 mb-6">We'll schedule your weekly milestones accordingly.</p>
             
             <div className="space-y-3">
               {['1-2 hours / day', '3-4 hours / day', '5+ hours / day', 'Weekends only'].map(opt => (

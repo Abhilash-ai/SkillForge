@@ -145,7 +145,7 @@ const Mentor = () => {
         <div className="p-4 shrink-0">
           <button 
             onClick={createNewSession}
-            className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium transition-colors"
+            className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:bg-zinc-800 text-white rounded-xl font-medium transition-colors"
           >
             <Plus className="w-4 h-4" />
             New Chat
@@ -163,7 +163,7 @@ const Mentor = () => {
                   : 'hover:bg-zinc-100 text-zinc-600'
               }`}
             >
-              <MessageSquare className={`w-4 h-4 shrink-0 ${activeSessionId === s.id ? 'text-rose-500' : 'text-zinc-400'}`} />
+              <MessageSquare className={`w-4 h-4 shrink-0 ${activeSessionId === s.id ? 'text-rose-500' : 'text-zinc-600 dark:text-zinc-400'}`} />
               <div className="truncate text-sm flex-1">{s.title}</div>
             </button>
           ))}
@@ -192,8 +192,8 @@ const Mentor = () => {
         <main className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth bg-zinc-50/50">
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.length === 0 && !loading && (
-              <div className="h-full flex flex-col items-center justify-center text-zinc-400 mt-20">
-                <Bot className="w-16 h-16 mb-4 text-zinc-300" />
+              <div className="h-full flex flex-col items-center justify-center text-zinc-600 dark:text-zinc-400 mt-20">
+                <Bot className="w-16 h-16 mb-4 text-zinc-700 dark:text-zinc-300" />
                 <p>Start a conversation with your AI Mentor.</p>
               </div>
             )}

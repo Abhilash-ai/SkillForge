@@ -131,7 +131,7 @@ const Community = () => {
           <div className="w-full md:w-1/4">
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-zinc-200 md:sticky md:top-8">
               <div className="relative mb-6">
-                <Search className="absolute left-3 top-3 text-zinc-400 w-4 h-4" />
+                <Search className="absolute left-3 top-3 text-zinc-600 dark:text-zinc-400 w-4 h-4" />
                 <input 
                   type="text" 
                   placeholder="Search..." 
@@ -161,7 +161,7 @@ const Community = () => {
               </div>
 
               <div className="mt-8 hidden md:block">
-                <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Popular Tags</h3>
+                <h3 className="text-xs font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-3">Popular Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {['#react', '#dsa', '#interview', '#python', '#hackathon'].map(tag => (
                     <span key={tag} className="px-3 py-1 bg-zinc-100 text-zinc-600 rounded-full text-xs font-medium cursor-pointer hover:bg-zinc-200">
@@ -238,7 +238,7 @@ const Community = () => {
             >
               <div className="p-6 border-b border-zinc-100 flex justify-between items-center bg-zinc-50">
                 <h2 className="text-xl font-bold text-zinc-900">Create New Post</h2>
-                <button onClick={() => setShowNewPost(false)} className="text-zinc-400 hover:text-zinc-900"><X className="w-6 h-6" /></button>
+                <button onClick={() => setShowNewPost(false)} className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900"><X className="w-6 h-6" /></button>
               </div>
               <div className="p-6 space-y-4">
                 <div>
@@ -281,7 +281,7 @@ const Community = () => {
                     <span>{new Date(activePost.created_at).toLocaleString()}</span>
                   </div>
                 </div>
-                <button onClick={() => setActivePost(null)} className="text-zinc-400 hover:text-zinc-900 bg-white p-2 rounded-full shadow-sm border border-zinc-200"><X className="w-5 h-5" /></button>
+                <button onClick={() => setActivePost(null)} className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 bg-white p-2 rounded-full shadow-sm border border-zinc-200"><X className="w-5 h-5" /></button>
               </div>
               
               <div className="flex-1 overflow-y-auto p-6 bg-white scrollbar-hide">
@@ -304,7 +304,7 @@ const Community = () => {
                         <div className="flex-1 bg-zinc-50 p-4 rounded-2xl rounded-tl-none border border-zinc-100">
                           <div className="flex justify-between items-center mb-2">
                             <span className="font-bold text-sm text-zinc-900">User {reply.user?.clerk_id?.substring(0,5)}</span>
-                            <span className="text-xs text-zinc-400">{new Date(reply.created_at).toLocaleDateString()}</span>
+                            <span className="text-xs text-zinc-600 dark:text-zinc-400">{new Date(reply.created_at).toLocaleDateString()}</span>
                           </div>
                           <p className="text-zinc-700 whitespace-pre-wrap text-sm">{reply.content}</p>
                         </div>

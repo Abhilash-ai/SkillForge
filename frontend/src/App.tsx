@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { ClerkProvider, useAuth, RedirectToSignIn } from '@clerk/react';
+import { useEffect } from 'react';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
@@ -16,6 +17,7 @@ import Opportunities from './pages/Opportunities';
 import BattleGround from './pages/BattleGround';
 import Leaderboard from './pages/Leaderboard';
 import Settings from './pages/Settings';
+import PublicProfile from './pages/PublicProfile';
 import Layout from './components/Layout';
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_sample';
@@ -33,6 +35,16 @@ const ProtectedRoute = () => {
 };
 
 function App() {
+  useEffect(() => {
+    // Initialize Theme
+    const storedTheme = localStorage.getItem('skillforge-theme');
+    if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
   return (
     <ClerkProvider publishableKey={clerkPubKey}>
       <BrowserRouter>
@@ -57,6 +69,7 @@ function App() {
             <Route path="/arena" element={<BattleGround />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/profile/:id" element={<PublicProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -277,7 +277,7 @@ def generate_assessment_questions(topic: str) -> dict:
         
     prompt = f"""
     You are an expert technical interviewer. Create a 10-question multiple choice assessment on the topic: "{topic}".
-    The questions should range from beginner to advanced.
+    The questions should focus explicitly on Easy to Intermediate difficulty to help the user build confidence.
     
     Return EXCLUSIVELY a valid JSON object in this format:
     {{

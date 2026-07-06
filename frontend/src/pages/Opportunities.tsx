@@ -64,7 +64,7 @@ const Opportunities = () => {
         </header>
 
         <div className="flex gap-4 mb-8 overflow-x-auto pb-4 no-scrollbar">
-          <button className="px-6 py-2 rounded-full bg-zinc-900 text-white font-bold whitespace-nowrap shrink-0">All Opportunities</button>
+          <button className="px-6 py-2 rounded-full bg-white dark:bg-zinc-900 text-white font-bold whitespace-nowrap shrink-0">All Opportunities</button>
           <button className="px-6 py-2 rounded-full bg-white border border-zinc-200 text-zinc-600 font-bold hover:bg-zinc-50 whitespace-nowrap shrink-0">Internships</button>
           <button className="px-6 py-2 rounded-full bg-white border border-zinc-200 text-zinc-600 font-bold hover:bg-zinc-50 whitespace-nowrap shrink-0">Hackathons</button>
           <button className="px-6 py-2 rounded-full bg-white border border-zinc-200 text-zinc-600 font-bold hover:bg-zinc-50 whitespace-nowrap shrink-0">Open Source</button>
@@ -81,7 +81,7 @@ const Opportunities = () => {
             >
               <button 
                 onClick={() => toggleSave(opp.id)}
-                className="absolute top-6 right-6 text-zinc-400 hover:text-teal-500 transition-colors"
+                className="absolute top-6 right-6 text-zinc-600 dark:text-zinc-400 hover:text-teal-500 transition-colors"
               >
                 {saved.includes(opp.id) ? <BookmarkCheck className="w-6 h-6 text-teal-500 fill-current" /> : <Bookmark className="w-6 h-6" />}
               </button>
@@ -96,7 +96,7 @@ const Opportunities = () => {
               </p>
 
               <div className="flex items-center gap-2 text-sm text-zinc-600 font-medium mb-6">
-                <Calendar className="w-4 h-4 text-zinc-400 shrink-0" /> Deadline: <span className="text-zinc-800">{opp.deadline}</span>
+                <Calendar className="w-4 h-4 text-zinc-600 dark:text-zinc-400 shrink-0" /> Deadline: <span className="text-zinc-800">{opp.deadline}</span>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-8">
@@ -132,14 +132,14 @@ const Opportunities = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-6 py-4 rounded-2xl shadow-2xl border border-zinc-800 flex items-center gap-4 z-50 w-[90%] md:w-auto"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-900 text-white px-6 py-4 rounded-2xl shadow-2xl border border-zinc-200 dark:border-zinc-800 flex items-center gap-4 z-50 w-[90%] md:w-auto"
           >
             <div className="w-10 h-10 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
               <h4 className="font-bold text-lg leading-tight">Application Sent</h4>
-              <p className="text-zinc-400 text-sm">Successfully applied for {showSuccessModal.title}</p>
+              <p className="text-zinc-600 dark:text-zinc-400 text-sm">Successfully applied for {showSuccessModal.title}</p>
             </div>
           </motion.div>
         )}

@@ -19,6 +19,11 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     # Profile Extensions
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    bio = Column(Text, nullable=True)
+    github_url = Column(String, nullable=True)
+    linkedin_url = Column(String, nullable=True)
     interests = Column(Text, nullable=True) # JSON array of strings
     topics = Column(Text, nullable=True) # JSON array of strings
     profile_icon = Column(String, default="User") # Icon name

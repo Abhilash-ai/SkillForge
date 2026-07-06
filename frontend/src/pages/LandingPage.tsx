@@ -9,7 +9,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 overflow-hidden relative font-sans selection:bg-rose-500/30">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-50 overflow-hidden relative font-sans selection:bg-rose-500/30">
       {/* Background gradients and particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-[30%] -left-[10%] w-[70%] h-[70%] rounded-full bg-rose-900/20 blur-[120px]" />
@@ -20,11 +20,29 @@ const LandingPage = () => {
       {/* Navbar */}
       <nav className="relative z-10 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-rose-500"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex items-center gap-2 cursor-pointer"
         >
-          SkillForge
+          <motion.div
+            animate={{ 
+              rotate: [0, -10, 10, -5, 5, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut" 
+            }}
+            className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-rose-600 flex items-center justify-center shadow-lg shadow-rose-500/30"
+          >
+            <Sparkles className="w-6 h-6 text-white" />
+          </motion.div>
+          <span className="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-rose-500 font-['Outfit']">
+            SkillForge
+          </span>
         </motion.div>
         
         <motion.div 
@@ -43,7 +61,7 @@ const LandingPage = () => {
           ) : (
             <>
               <SignInButton >
-                <button className="px-5 py-2 text-zinc-300 hover:text-white transition-colors font-medium">
+                <button className="px-5 py-2 text-zinc-700 dark:text-zinc-300 hover:text-white transition-colors font-medium">
                   Log in
                 </button>
               </SignInButton>
@@ -88,7 +106,7 @@ const LandingPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-xl text-zinc-400 max-w-2xl mb-12"
+          className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mb-12"
         >
           The all-in-one AI mentor that bridges the gap between education and industry expectations. Personalized roadmaps, real-time coding, and intelligent placement prep.
         </motion.p>
@@ -148,13 +166,13 @@ const FeatureCard = ({ icon, title, desc, delay }: { icon: React.ReactNode, titl
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay }}
     whileHover={{ y: -5 }}
-    className="p-6 rounded-3xl bg-zinc-900/50 border border-white/5 backdrop-blur-xl flex flex-col items-start text-left"
+    className="p-6 rounded-3xl bg-white dark:bg-zinc-900/50 border border-white/5 backdrop-blur-xl flex flex-col items-start text-left"
   >
     <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
       {icon}
     </div>
     <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-    <p className="text-zinc-400 leading-relaxed">
+    <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
       {desc}
     </p>
   </motion.div>

@@ -96,7 +96,7 @@ const Projects = () => {
               <div className="flex gap-2 mt-auto">
                 <button 
                   onClick={() => setSelectedProject(proj)}
-                  className="flex-1 py-3 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2 text-sm"
+                  className="flex-1 py-3 bg-white dark:bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-100 dark:bg-zinc-800 transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                   <ExternalLink className="w-4 h-4" /> View Details
                 </button>

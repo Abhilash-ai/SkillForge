@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --color-forge-primary: #D97706; /* Burnt Orange */
@@ -18,11 +19,9 @@
     --foreground: #18181B;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #18181B; /* Charcoal */
-      --foreground: #F5F5F4; /* Beige */
-    }
+  :root.dark {
+    --background: #18181B; /* Charcoal */
+    --foreground: #F5F5F4; /* Beige */
   }
 
   body {

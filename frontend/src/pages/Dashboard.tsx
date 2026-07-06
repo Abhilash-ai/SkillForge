@@ -30,10 +30,10 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen p-8 flex items-center justify-center">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="w-16 h-16 bg-zinc-800 rounded-full mb-4 flex items-center justify-center">
+          <div className="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-full mb-4 flex items-center justify-center">
             <Flame className="w-8 h-8 text-amber-500 animate-bounce" />
           </div>
-          <div className="h-6 w-32 bg-zinc-800 rounded mb-4"></div>
+          <div className="h-6 w-32 bg-zinc-100 dark:bg-zinc-800 rounded mb-4"></div>
           <p className="text-zinc-500 text-sm italic max-w-xs text-center">Waking up the Forge (Free Tier Server). This might take up to 50 seconds on the first load...</p>
         </div>
       </div>
@@ -47,16 +47,16 @@ const Dashboard = () => {
   const roadmap = dashboardData?.roadmap;
 
   return (
-    <div className="min-h-screen p-8 text-zinc-100">
+    <div className="min-h-screen p-8 text-zinc-900 dark:text-zinc-100">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Welcome Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-0">
           <div>
-            <h1 className="text-4xl font-extrabold font-['Outfit'] tracking-tight">
+            <h1 className="text-4xl font-extrabold font-['Outfit'] tracking-tight hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-500 hover:to-rose-500 transition-all duration-300 cursor-default inline-block">
               The Forge Room
             </h1>
-            <p className="text-zinc-400 mt-2 text-lg">
+            <p className="text-zinc-600 dark:text-zinc-400 mt-2 text-lg">
               Welcome back to your workshop, <span className="text-amber-500 font-medium">{user?.firstName || 'Artisan'}</span>. Let's build your future.
             </p>
           </div>
@@ -69,7 +69,7 @@ const Dashboard = () => {
               <div className="h-8 w-px bg-zinc-700"></div>
               <div className="flex flex-col items-end">
                 <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Forge XP</span>
-                <span className="text-zinc-200 font-bold font-['Outfit']">{xp.toLocaleString()}</span>
+                <span className="text-zinc-800 dark:text-zinc-200 font-bold font-['Outfit']">{xp.toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -95,13 +95,13 @@ const Dashboard = () => {
                   dashboardData.missions.map((mission: any, idx: number) => (
                     <div key={idx} className="forge-panel p-6 mb-6 hover:border-amber-700/50 transition-colors">
                       <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-lg font-semibold text-zinc-200">{mission.mission.title}</h3>
+                        <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">{mission.mission.title}</h3>
                         <span className="px-3 py-1 bg-amber-500/10 text-amber-500 rounded-full text-xs font-bold border border-amber-500/20">+{mission.mission.xp_reward} XP</span>
                       </div>
-                      <p className="text-zinc-400 text-sm mb-6">{mission.mission.description}</p>
+                      <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6">{mission.mission.description}</p>
                       
                       <div className="flex items-center gap-4">
-                        <div className="flex-1 bg-zinc-800 rounded-full h-3 overflow-hidden border border-zinc-700">
+                        <div className="flex-1 bg-zinc-100 dark:bg-zinc-800 rounded-full h-3 overflow-hidden border border-zinc-300 dark:border-zinc-700">
                           <div className="bg-gradient-to-r from-amber-700 to-amber-500 h-full rounded-full relative overflow-hidden" style={{ width: `${mission.progress_percentage}%` }}>
                             {/* Molten metal animation effect */}
                             <div className="absolute inset-0 bg-white/20 animate-forge-flow" style={{ backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)' }}></div>
@@ -136,10 +136,10 @@ const Dashboard = () => {
                 {roadmap ? (
                   <div className="space-y-4">
                     <div className="flex justify-between text-sm">
-                      <span className="text-zinc-400">{roadmap.career}</span>
-                      <span className="text-zinc-200 font-bold">{roadmap.stage_text}</span>
+                      <span className="text-zinc-600 dark:text-zinc-400">{roadmap.career}</span>
+                      <span className="text-zinc-800 dark:text-zinc-200 font-bold">{roadmap.stage_text}</span>
                     </div>
-                    <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                       <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${roadmap.progress_percentage}%`}}></div>
                     </div>
                     <a href="/roadmap" className="text-sm text-emerald-500 font-medium hover:text-emerald-400 flex items-center gap-1 mt-4 transition-colors">
@@ -161,18 +161,18 @@ const Dashboard = () => {
                   <h3 className="font-bold font-['Outfit'] text-lg">Weekly Goals</h3>
                 </div>
                 <ul className="space-y-3">
-                  <li className="flex items-center gap-3 text-sm text-zinc-300">
+                  <li className="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300">
                     <div className="w-5 h-5 rounded-md border border-violet-500/50 flex items-center justify-center bg-violet-500/20">
                       <div className="w-2.5 h-2.5 bg-violet-500 rounded-sm"></div>
                     </div>
                     Complete 3 algorithms
                   </li>
-                  <li className="flex items-center gap-3 text-sm text-zinc-400">
-                    <div className="w-5 h-5 rounded-md border border-zinc-700 flex items-center justify-center"></div>
+                  <li className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                    <div className="w-5 h-5 rounded-md border border-zinc-300 dark:border-zinc-700 flex items-center justify-center"></div>
                     Update Resume via ATS
                   </li>
-                  <li className="flex items-center gap-3 text-sm text-zinc-400">
-                    <div className="w-5 h-5 rounded-md border border-zinc-700 flex items-center justify-center"></div>
+                  <li className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                    <div className="w-5 h-5 rounded-md border border-zinc-300 dark:border-zinc-700 flex items-center justify-center"></div>
                     Contribute to Community
                   </li>
                 </ul>
@@ -191,12 +191,12 @@ const Dashboard = () => {
                   <div className="absolute inset-0 bg-amber-500 blur-xl opacity-20 animate-pulse"></div>
                   <Flame className="w-16 h-16 text-amber-500 relative z-10" />
                 </div>
-                <h3 className="text-4xl font-black font-['Outfit'] mt-4 text-white">{streak} <span className="text-xl text-zinc-400 font-medium">Days</span></h3>
+                <h3 className="text-4xl font-black font-['Outfit'] mt-4 text-white">{streak} <span className="text-xl text-zinc-600 dark:text-zinc-400 font-medium">Days</span></h3>
                 <p className="text-amber-500/80 text-sm mt-2 font-medium uppercase tracking-widest">Active Forging Streak</p>
                 
                 <div className="flex gap-2 mt-6">
                   {['M','T','W','T','F','S','S'].map((day, i) => (
-                    <div key={i} className={`w-8 h-10 rounded-md flex flex-col items-center justify-center text-xs font-bold ${i < streak ? 'bg-amber-500/20 text-amber-500 border border-amber-500/30' : 'bg-zinc-800 text-zinc-600'}`}>
+                    <div key={i} className={`w-8 h-10 rounded-md flex flex-col items-center justify-center text-xs font-bold ${i < streak ? 'bg-amber-500/20 text-amber-500 border border-amber-500/30' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600'}`}>
                       {day}
                     </div>
                   ))}
@@ -208,20 +208,20 @@ const Dashboard = () => {
             <div className="forge-card p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold font-['Outfit'] text-lg flex items-center gap-2">
-                  <Trophy className="w-5 h-5 text-zinc-400" />
+                  <Trophy className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
                   Showcase Shelf
                 </h3>
               </div>
               <div className="grid grid-cols-3 gap-4">
-                <div className="aspect-square bg-zinc-800/50 rounded-xl border border-zinc-700/50 flex flex-col items-center justify-center p-2 group hover:border-amber-500/50 transition-colors cursor-pointer">
+                <div className="aspect-square bg-zinc-100 dark:bg-zinc-800/50 rounded-xl border border-zinc-300 dark:border-zinc-700/50 flex flex-col items-center justify-center p-2 group hover:border-amber-500/50 transition-colors cursor-pointer">
                   <Award className="w-8 h-8 text-amber-600 group-hover:text-amber-500 transition-colors mb-2" />
-                  <span className="text-[10px] text-center text-zinc-400 leading-tight">First Spark</span>
+                  <span className="text-[10px] text-center text-zinc-600 dark:text-zinc-400 leading-tight">First Spark</span>
                 </div>
-                <div className="aspect-square bg-zinc-800/50 rounded-xl border border-zinc-700/50 flex flex-col items-center justify-center p-2 group hover:border-violet-500/50 transition-colors cursor-pointer">
+                <div className="aspect-square bg-zinc-100 dark:bg-zinc-800/50 rounded-xl border border-zinc-300 dark:border-zinc-700/50 flex flex-col items-center justify-center p-2 group hover:border-violet-500/50 transition-colors cursor-pointer">
                   <Zap className="w-8 h-8 text-violet-600 group-hover:text-violet-500 transition-colors mb-2" />
-                  <span className="text-[10px] text-center text-zinc-400 leading-tight">Fast Learner</span>
+                  <span className="text-[10px] text-center text-zinc-600 dark:text-zinc-400 leading-tight">Fast Learner</span>
                 </div>
-                <div className="aspect-square bg-zinc-900 border border-zinc-800 border-dashed rounded-xl flex items-center justify-center p-2">
+                <div className="aspect-square bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 border-dashed rounded-xl flex items-center justify-center p-2">
                   <span className="text-[10px] text-zinc-600 text-center">Locked</span>
                 </div>
               </div>

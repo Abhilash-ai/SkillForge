@@ -58,7 +58,7 @@ const Careers = () => {
           <div className="md:w-1/3">
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-zinc-200 sticky top-8">
               <div className="relative mb-6">
-                <Search className="absolute left-4 top-3.5 text-zinc-400 w-5 h-5" />
+                <Search className="absolute left-4 top-3.5 text-zinc-600 dark:text-zinc-400 w-5 h-5" />
                 <input 
                   type="text" 
                   placeholder="Search a career..." 
@@ -130,14 +130,14 @@ const Careers = () => {
                 <div className="pt-6 border-t border-zinc-100">
                   <button 
                     onClick={() => navigate(`/roadmap?career=${encodeURIComponent(insights.career)}`)}
-                    className="w-full py-4 rounded-xl bg-zinc-900 text-white font-bold text-lg hover:bg-zinc-800 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl bg-white dark:bg-zinc-900 text-white font-bold text-lg hover:bg-zinc-100 dark:bg-zinc-800 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                   >
                     Generate Personalized Roadmap <TrendingUp className="w-5 h-5" />
                   </button>
                 </div>
               </motion.div>
             ) : (
-              <div className="h-96 bg-white/50 backdrop-blur-sm rounded-3xl border border-zinc-200 border-dashed flex flex-col items-center justify-center text-zinc-400">
+              <div className="h-96 bg-white/50 backdrop-blur-sm rounded-3xl border border-zinc-200 border-dashed flex flex-col items-center justify-center text-zinc-600 dark:text-zinc-400">
                 <Search className="w-12 h-12 mb-4 opacity-50" />
                 <p>Select or search a career to view AI insights.</p>
               </div>

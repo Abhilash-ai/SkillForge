@@ -66,11 +66,11 @@ const BattleGround = () => {
   if (selectedQuestion) {
     return (
       <div className="flex flex-col h-full bg-[#18181B]">
-        <div className="flex-none p-4 border-b border-zinc-800 bg-zinc-900/50 flex items-center justify-between">
+        <div className="flex-none p-4 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setSelectedQuestion(null)}
-              className="text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-600 dark:text-zinc-400 hover:text-white transition-colors"
             >
               ← Back to Arena
             </button>
@@ -100,7 +100,7 @@ const BattleGround = () => {
 
         <div className="flex-1 flex overflow-hidden">
           {/* Problem Description */}
-          <div className="w-1/3 border-r border-zinc-800 bg-zinc-900/30 p-6 overflow-y-auto prose prose-invert prose-amber max-w-none">
+          <div className="w-1/3 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/30 p-6 overflow-y-auto prose prose-invert prose-amber max-w-none">
             <div dangerouslySetInnerHTML={{ __html: selectedQuestion.description.replace(/\n/g, '<br/>') }} />
             
             {result && (
@@ -126,13 +126,13 @@ const BattleGround = () => {
 
           {/* Code Editor (Simple Textarea for MVP) */}
           <div className="flex-1 flex flex-col bg-[#1E1E1E]">
-            <div className="flex-none px-4 py-2 bg-[#2D2D2D] border-b border-zinc-800 text-xs font-mono text-zinc-400 flex items-center gap-2">
+            <div className="flex-none px-4 py-2 bg-[#2D2D2D] border-b border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-600 dark:text-zinc-400 flex items-center gap-2">
               <Code2 className="w-4 h-4" /> solution.py
             </div>
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="flex-1 w-full bg-transparent text-zinc-300 font-mono p-4 focus:outline-none resize-none leading-relaxed"
+              className="flex-1 w-full bg-transparent text-zinc-700 dark:text-zinc-300 font-mono p-4 focus:outline-none resize-none leading-relaxed"
               spellCheck="false"
             />
           </div>
@@ -152,7 +152,7 @@ const BattleGround = () => {
             The Battle Ground
             <span className="text-xs px-2 py-0.5 bg-red-500 text-white rounded font-bold uppercase tracking-wider">Beta</span>
           </h1>
-          <p className="text-zinc-400">Practice LeetCode-style questions, defeat the test cases, and climb the Leaderboard.</p>
+          <p className="text-zinc-600 dark:text-zinc-400">Practice LeetCode-style questions, defeat the test cases, and climb the Leaderboard.</p>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ const BattleGround = () => {
           <div 
             key={q.id}
             onClick={() => handleSelect(q)}
-            className="group p-6 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-amber-500/50 hover:bg-zinc-800/50 transition-all cursor-pointer relative overflow-hidden"
+            className="group p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-amber-500/50 hover:bg-zinc-100 dark:bg-zinc-800/50 transition-all cursor-pointer relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <Code2 className="w-24 h-24 text-amber-500 transform rotate-12 translate-x-4 -translate-y-4" />
@@ -193,7 +193,7 @@ const BattleGround = () => {
           </div>
         ))}
         {questions.length === 0 && (
-          <div className="col-span-full p-12 text-center text-zinc-500 bg-zinc-900/50 rounded-xl border border-zinc-800 border-dashed">
+          <div className="col-span-full p-12 text-center text-zinc-500 bg-white dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-zinc-800 border-dashed">
             No challenges available yet.
           </div>
         )}
