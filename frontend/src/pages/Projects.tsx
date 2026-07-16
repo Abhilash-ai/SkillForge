@@ -10,7 +10,7 @@ const projects = [
     duration: "4 Weeks",
     tech: ["Node.js", "Docker", "RabbitMQ", "Redis"],
     description: "Build a scalable e-commerce backend using microservices architecture. You'll learn containerization, message queues, and distributed databases.",
-    color: "from-orange-500 to-amber-500",
+    color: "from-fuchsia-500 to-violet-500",
     defaultCode: "const express = require('express');\nconst app = express();\n\napp.get('/api/products', (req, res) => {\n  res.json({ products: [] });\n});\n\napp.listen(3000);"
   },
   {
@@ -19,7 +19,7 @@ const projects = [
     duration: "2 Weeks",
     tech: ["Python", "FastAPI", "Gemini API", "React"],
     description: "An AI-powered ATS system that parses resumes and gives improvement suggestions. Great for learning LLM integration and parsing algorithms.",
-    color: "from-rose-500 to-pink-500",
+    color: "from-cyan-500 to-pink-500",
     defaultCode: "from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.post('/analyze')\ndef analyze_resume(text: str):\n    return {'score': 85, 'feedback': 'Great resume!'}"
   },
   {
@@ -28,7 +28,7 @@ const projects = [
     duration: "1 Week",
     tech: ["React", "Socket.io", "Express"],
     description: "A simple real-time chat application with distinct rooms and active user lists. Perfect for grasping WebSockets and event-driven programming.",
-    color: "from-lime-500 to-teal-500",
+    color: "from-emerald-500 to-emerald-500",
     defaultCode: "import { io } from 'socket.io-client';\n\nconst socket = io('http://localhost:3000');\n\nsocket.on('connect', () => {\n  console.log('Connected to chat server!');\n});"
   }
 ];
@@ -43,17 +43,17 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 p-4 md:p-8">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         <header className="mb-8 md:mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold mb-2 flex items-center gap-3">
-              <FolderGit2 className="w-8 h-8 md:w-10 md:h-10 text-orange-600" /> Project Recommendations
+              <FolderGit2 className="w-8 h-8 md:w-10 md:h-10 text-fuchsia-600" /> Project Recommendations
             </h1>
-            <p className="text-zinc-600 text-sm md:text-lg">Curated projects based on your skills and career goals.</p>
+            <p className="text-slate-600 text-sm md:text-lg">Curated projects based on your skills and career goals.</p>
           </div>
-          <button className="px-6 py-2 bg-white border border-zinc-200 shadow-sm rounded-xl font-bold flex items-center gap-2 hover:bg-zinc-50 transition-colors w-full md:w-auto justify-center">
-            <Star className="w-5 h-5 text-amber-500" /> Saved Projects
+          <button className="px-6 py-2 bg-white border border-slate-200 shadow-sm rounded-xl font-bold flex items-center gap-2 hover:bg-slate-50 transition-colors w-full md:w-auto justify-center">
+            <Star className="w-5 h-5 text-violet-500" /> Saved Projects
           </button>
         </header>
 
@@ -64,30 +64,30 @@ const Projects = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-white rounded-3xl p-6 shadow-sm border border-zinc-200 flex flex-col"
+              className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col"
             >
               <div className={`w-full h-2 rounded-full bg-gradient-to-r ${proj.color} mb-6`} />
               
               <div className="flex items-start justify-between mb-4">
-                <h2 className="text-xl font-bold text-zinc-800 leading-tight">{proj.title}</h2>
+                <h2 className="text-xl font-bold text-slate-800 leading-tight">{proj.title}</h2>
                 <span className={`px-2 py-1 text-xs font-bold uppercase rounded-md shrink-0 ${
-                  proj.level === 'Beginner' ? 'bg-lime-100 text-lime-700' :
-                  proj.level === 'Intermediate' ? 'bg-amber-100 text-amber-700' :
+                  proj.level === 'Beginner' ? 'bg-emerald-100 text-emerald-700' :
+                  proj.level === 'Intermediate' ? 'bg-violet-100 text-violet-700' :
                   'bg-red-100 text-red-700'
                 }`}>
                   {proj.level}
                 </span>
               </div>
               
-              <p className="text-zinc-600 text-sm mb-6 flex-1 line-clamp-3">{proj.description}</p>
+              <p className="text-slate-600 text-sm mb-6 flex-1 line-clamp-3">{proj.description}</p>
               
-              <div className="flex items-center gap-2 mb-6 text-zinc-500 text-sm font-medium">
+              <div className="flex items-center gap-2 mb-6 text-slate-500 text-sm font-medium">
                 <Clock className="w-4 h-4" /> {proj.duration}
               </div>
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {proj.tech.map(t => (
-                  <span key={t} className="px-2.5 py-1 bg-zinc-100 text-zinc-600 text-xs font-bold rounded-lg border border-zinc-200">
+                  <span key={t} className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg border border-slate-200">
                     {t}
                   </span>
                 ))}
@@ -96,13 +96,13 @@ const Projects = () => {
               <div className="flex gap-2 mt-auto">
                 <button 
                   onClick={() => setSelectedProject(proj)}
-                  className="flex-1 py-3 bg-white dark:bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-100 dark:bg-zinc-800 transition-colors flex items-center justify-center gap-2 text-sm"
+                  className="flex-1 py-3 bg-white dark:bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-100 dark:bg-slate-800 transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                   <ExternalLink className="w-4 h-4" /> View Details
                 </button>
                 <button 
                   onClick={() => handleOpenPlayground(proj)}
-                  className="p-3 bg-zinc-100 text-zinc-700 rounded-xl hover:bg-zinc-200 transition-colors"
+                  className="p-3 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-colors"
                   title="Open in Playground"
                 >
                   <Code className="w-5 h-5" />
@@ -131,37 +131,37 @@ const Projects = () => {
               <div className="p-6 md:p-8">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-zinc-900 mb-2">{selectedProject.title}</h2>
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">{selectedProject.title}</h2>
                     <div className="flex items-center gap-3">
                       <span className={`px-2 py-1 text-xs font-bold uppercase rounded-md ${
-                        selectedProject.level === 'Beginner' ? 'bg-lime-100 text-lime-700' :
-                        selectedProject.level === 'Intermediate' ? 'bg-amber-100 text-amber-700' :
+                        selectedProject.level === 'Beginner' ? 'bg-emerald-100 text-emerald-700' :
+                        selectedProject.level === 'Intermediate' ? 'bg-violet-100 text-violet-700' :
                         'bg-red-100 text-red-700'
                       }`}>
                         {selectedProject.level}
                       </span>
-                      <span className="flex items-center gap-1 text-zinc-500 text-sm font-medium">
+                      <span className="flex items-center gap-1 text-slate-500 text-sm font-medium">
                         <Clock className="w-4 h-4" /> {selectedProject.duration}
                       </span>
                     </div>
                   </div>
                   <button 
                     onClick={() => setSelectedProject(null)}
-                    className="p-2 bg-zinc-100 hover:bg-zinc-200 rounded-full text-zinc-500 transition-colors"
+                    className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-colors"
                   >
                     <X className="w-6 h-6" />
                   </button>
                 </div>
                 
-                <h3 className="text-lg font-bold text-zinc-800 mb-2">Project Overview</h3>
-                <p className="text-zinc-600 mb-6 leading-relaxed">
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Project Overview</h3>
+                <p className="text-slate-600 mb-6 leading-relaxed">
                   {selectedProject.description}
                 </p>
 
-                <h3 className="text-lg font-bold text-zinc-800 mb-3">Tech Stack</h3>
+                <h3 className="text-lg font-bold text-slate-800 mb-3">Tech Stack</h3>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {selectedProject.tech.map((t: string) => (
-                    <span key={t} className="px-3 py-1.5 bg-zinc-100 text-zinc-700 text-sm font-bold rounded-lg border border-zinc-200">
+                    <span key={t} className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm font-bold rounded-lg border border-slate-200">
                       {t}
                     </span>
                   ))}
@@ -173,11 +173,11 @@ const Projects = () => {
                       setSelectedProject(null);
                       handleOpenPlayground(selectedProject);
                     }}
-                    className="flex-1 py-4 bg-orange-600 text-white rounded-xl font-bold hover:bg-orange-700 transition-colors flex items-center justify-center gap-2 text-lg shadow-lg shadow-orange-600/20"
+                    className="flex-1 py-4 bg-fuchsia-600 text-white rounded-xl font-bold hover:bg-fuchsia-700 transition-colors flex items-center justify-center gap-2 text-lg shadow-lg shadow-fuchsia-600/20"
                   >
                     <Code className="w-6 h-6" /> Start Coding Now
                   </button>
-                  <button className="py-4 px-6 bg-zinc-100 text-zinc-800 rounded-xl font-bold hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2">
+                  <button className="py-4 px-6 bg-slate-100 text-slate-800 rounded-xl font-bold hover:bg-slate-200 transition-colors flex items-center justify-center gap-2">
                     <Star className="w-5 h-5" /> Save for Later
                   </button>
                 </div>

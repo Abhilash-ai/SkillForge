@@ -47,18 +47,18 @@ const PublicProfile = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[80vh]">
-        <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   if (error || !profile) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[80vh] text-zinc-900 dark:text-zinc-100">
-        <ShieldAlert className="w-16 h-16 text-rose-500 mb-4" />
+      <div className="flex flex-col items-center justify-center min-h-[80vh] text-slate-900 dark:text-slate-100">
+        <ShieldAlert className="w-16 h-16 text-cyan-500 mb-4" />
         <h2 className="text-2xl font-bold mb-2">Profile Not Found</h2>
-        <p className="text-zinc-500 dark:text-zinc-400 mb-6">The artisan you are looking for does not exist.</p>
-        <button onClick={() => navigate(-1)} className="px-6 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700">
+        <p className="text-slate-500 dark:text-slate-400 mb-6">The artisan you are looking for does not exist.</p>
+        <button onClick={() => navigate(-1)} className="px-6 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700">
           Go Back
         </button>
       </div>
@@ -72,24 +72,24 @@ const PublicProfile = () => {
     : 'Unknown Artisan';
 
   return (
-    <div className="p-8 max-w-4xl mx-auto text-zinc-900 dark:text-zinc-100">
+    <div className="p-8 max-w-4xl mx-auto text-slate-900 dark:text-slate-100">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 mb-8 transition-colors"
+        className="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 mb-8 transition-colors"
       >
         <ArrowLeft className="w-5 h-5" /> Back
       </button>
 
       {/* Hero Section */}
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-xl relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-xl relative overflow-hidden">
         {/* Decorative background element */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
         
         <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
-          <div className="w-32 h-32 bg-gradient-to-br from-amber-500 to-rose-600 p-1 rounded-3xl shadow-lg shrink-0">
-            <div className="w-full h-full bg-zinc-900 rounded-[22px] flex items-center justify-center">
+          <div className="w-32 h-32 bg-gradient-to-br from-violet-500 to-cyan-600 p-1 rounded-3xl shadow-lg shrink-0">
+            <div className="w-full h-full bg-slate-900 rounded-[22px] flex items-center justify-center">
               {/* Fallback to User icon if dynamically rendering the chosen icon is too complex without a map */}
-              <User className="w-16 h-16 text-amber-500" />
+              <User className="w-16 h-16 text-violet-500" />
             </div>
           </div>
           
@@ -98,30 +98,30 @@ const PublicProfile = () => {
               <h1 className="text-4xl font-extrabold font-['Outfit'] tracking-tight">
                 {displayName}
               </h1>
-              <div className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-bold rounded-full uppercase tracking-wider">
+              <div className="px-3 py-1 bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-sm font-bold rounded-full uppercase tracking-wider">
                 {profile.rank}
               </div>
             </div>
             
             {profile.created_at && (
-              <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 mb-4">
+              <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
                 <Calendar className="w-4 h-4" />
                 Joined {new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
               </div>
             )}
 
-            <p className="text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl">
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl">
               {profile.bio || "This artisan prefers to let their code speak for itself."}
             </p>
 
             <div className="flex gap-3 mt-6">
               {profile.github_url && (
-                <a href={profile.github_url} target="_blank" rel="noreferrer" className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors">
+                <a href={profile.github_url} target="_blank" rel="noreferrer" className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors">
                   <Link className="w-5 h-5" />
                 </a>
               )}
               {profile.linkedin_url && (
-                <a href={profile.linkedin_url} target="_blank" rel="noreferrer" className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors">
+                <a href={profile.linkedin_url} target="_blank" rel="noreferrer" className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors">
                   <Link className="w-5 h-5" />
                 </a>
               )}
@@ -132,32 +132,32 @@ const PublicProfile = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
           <div className="p-4 bg-indigo-500/10 rounded-xl text-indigo-500">
             <Trophy className="w-8 h-8" />
           </div>
           <div>
-            <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Experience</div>
+            <div className="text-sm font-bold text-slate-500 uppercase tracking-wider">Experience</div>
             <div className="text-2xl font-black font-['Outfit']">{profile.xp_points} XP</div>
           </div>
         </div>
         
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
           <div className="p-4 bg-yellow-500/10 rounded-xl text-yellow-500">
             <Coins className="w-8 h-8" />
           </div>
           <div>
-            <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Wealth</div>
+            <div className="text-sm font-bold text-slate-500 uppercase tracking-wider">Wealth</div>
             <div className="text-2xl font-black font-['Outfit']">{profile.coins} Coins</div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
-          <div className="p-4 bg-orange-500/10 rounded-xl text-orange-500">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+          <div className="p-4 bg-fuchsia-500/10 rounded-xl text-fuchsia-500">
             <Flame className="w-8 h-8" />
           </div>
           <div>
-            <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Streak</div>
+            <div className="text-sm font-bold text-slate-500 uppercase tracking-wider">Streak</div>
             <div className="text-2xl font-black font-['Outfit']">{profile.current_streak} Days</div>
           </div>
         </div>
@@ -165,23 +165,23 @@ const PublicProfile = () => {
 
       {/* Badges / Interests */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5 text-rose-500" />
+            <Target className="w-5 h-5 text-cyan-500" />
             Tech Interests
           </h3>
           <div className="flex flex-wrap gap-2">
             {interestsList.length > 0 ? interestsList.map((interest: string) => (
-              <span key={interest} className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-sm font-medium rounded-md border border-zinc-200 dark:border-zinc-700">
+              <span key={interest} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-sm font-medium rounded-md border border-slate-200 dark:border-slate-700">
                 {interest}
               </span>
             )) : (
-              <span className="text-zinc-500 dark:text-zinc-500 text-sm italic">No specific interests set.</span>
+              <span className="text-slate-500 dark:text-slate-500 text-sm italic">No specific interests set.</span>
             )}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
             <Brain className="w-5 h-5 text-indigo-500" />
             Currently Studying
@@ -192,7 +192,7 @@ const PublicProfile = () => {
                 {topic}
               </span>
             )) : (
-              <span className="text-zinc-500 dark:text-zinc-500 text-sm italic">Not actively studying any topics.</span>
+              <span className="text-slate-500 dark:text-slate-500 text-sm italic">Not actively studying any topics.</span>
             )}
           </div>
         </div>

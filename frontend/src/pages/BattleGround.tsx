@@ -58,7 +58,7 @@ const BattleGround = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -66,21 +66,21 @@ const BattleGround = () => {
   if (selectedQuestion) {
     return (
       <div className="flex flex-col h-full bg-[#18181B]">
-        <div className="flex-none p-4 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex items-center justify-between">
+        <div className="flex-none p-4 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setSelectedQuestion(null)}
-              className="text-zinc-600 dark:text-zinc-400 hover:text-white transition-colors"
+              className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
             >
               ← Back to Arena
             </button>
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Swords className="w-5 h-5 text-amber-500" />
+              <Swords className="w-5 h-5 text-violet-500" />
               {selectedQuestion.title}
             </h2>
             <span className={`text-xs px-2 py-1 rounded font-bold ${
               selectedQuestion.difficulty === 'Easy' ? 'bg-emerald-500/10 text-emerald-500' :
-              selectedQuestion.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-500' :
+              selectedQuestion.difficulty === 'Medium' ? 'bg-violet-500/10 text-violet-500' :
               'bg-red-500/10 text-red-500'
             }`}>
               {selectedQuestion.difficulty}
@@ -90,7 +90,7 @@ const BattleGround = () => {
             <button 
               onClick={handleSubmit}
               disabled={submitting}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white rounded-lg font-medium transition-all shadow-lg shadow-amber-900/20 disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 text-white rounded-lg font-medium transition-all shadow-lg shadow-violet-900/20 disabled:opacity-50"
             >
               {submitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Play className="w-4 h-4" />}
               Submit Solution
@@ -100,7 +100,7 @@ const BattleGround = () => {
 
         <div className="flex-1 flex overflow-hidden">
           {/* Problem Description */}
-          <div className="w-1/3 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/30 p-6 overflow-y-auto prose prose-invert prose-amber max-w-none">
+          <div className="w-1/3 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 p-6 overflow-y-auto prose pcyan-invert pcyan-amber max-w-none">
             <div dangerouslySetInnerHTML={{ __html: selectedQuestion.description.replace(/\n/g, '<br/>') }} />
             
             {result && (
@@ -115,7 +115,7 @@ const BattleGround = () => {
                     <div className="flex items-center gap-1.5 font-bold text-emerald-500">
                       <Zap className="w-4 h-4" /> +{result.xp_earned} XP
                     </div>
-                    <div className="flex items-center gap-1.5 font-bold text-amber-500">
+                    <div className="flex items-center gap-1.5 font-bold text-violet-500">
                       <Trophy className="w-4 h-4" /> +{result.coins_earned} Coins
                     </div>
                   </div>
@@ -126,13 +126,13 @@ const BattleGround = () => {
 
           {/* Code Editor (Simple Textarea for MVP) */}
           <div className="flex-1 flex flex-col bg-[#1E1E1E]">
-            <div className="flex-none px-4 py-2 bg-[#2D2D2D] border-b border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-600 dark:text-zinc-400 flex items-center gap-2">
+            <div className="flex-none px-4 py-2 bg-[#2D2D2D] border-b border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-600 dark:text-slate-400 flex items-center gap-2">
               <Code2 className="w-4 h-4" /> solution.py
             </div>
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="flex-1 w-full bg-transparent text-zinc-700 dark:text-zinc-300 font-mono p-4 focus:outline-none resize-none leading-relaxed"
+              className="flex-1 w-full bg-transparent text-slate-700 dark:text-slate-300 font-mono p-4 focus:outline-none resize-none leading-relaxed"
               spellCheck="false"
             />
           </div>
@@ -152,7 +152,7 @@ const BattleGround = () => {
             The Battle Ground
             <span className="text-xs px-2 py-0.5 bg-red-500 text-white rounded font-bold uppercase tracking-wider">Beta</span>
           </h1>
-          <p className="text-zinc-600 dark:text-zinc-400">Practice LeetCode-style questions, defeat the test cases, and climb the Leaderboard.</p>
+          <p className="text-slate-600 dark:text-slate-400">Practice LeetCode-style questions, defeat the test cases, and climb the Leaderboard.</p>
         </div>
       </div>
 
@@ -161,39 +161,39 @@ const BattleGround = () => {
           <div 
             key={q.id}
             onClick={() => handleSelect(q)}
-            className="group p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-amber-500/50 hover:bg-zinc-100 dark:bg-zinc-800/50 transition-all cursor-pointer relative overflow-hidden"
+            className="group p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-violet-500/50 hover:bg-slate-100 dark:bg-slate-800/50 transition-all cursor-pointer relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Code2 className="w-24 h-24 text-amber-500 transform rotate-12 translate-x-4 -translate-y-4" />
+              <Code2 className="w-24 h-24 text-violet-500 transform rotate-12 translate-x-4 -translate-y-4" />
             </div>
             
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-4">
                 <span className={`text-xs px-2 py-1 rounded font-bold ${
                   q.difficulty === 'Easy' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
-                  q.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
+                  q.difficulty === 'Medium' ? 'bg-violet-500/10 text-violet-500 border border-violet-500/20' :
                   'bg-red-500/10 text-red-500 border border-red-500/20'
                 }`}>
                   {q.difficulty}
                 </span>
               </div>
               
-              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-violet-400 transition-colors">
                 {q.title}
               </h3>
               
-              <p className="text-zinc-500 text-sm line-clamp-2 mb-6">
+              <p className="text-slate-500 text-sm line-clamp-2 mb-6">
                 {q.description}
               </p>
               
-              <div className="flex items-center text-amber-500 font-medium text-sm gap-1 group-hover:translate-x-1 transition-transform">
+              <div className="flex items-center text-violet-500 font-medium text-sm gap-1 group-hover:translate-x-1 transition-transform">
                 Start Challenge <ChevronRight className="w-4 h-4" />
               </div>
             </div>
           </div>
         ))}
         {questions.length === 0 && (
-          <div className="col-span-full p-12 text-center text-zinc-500 bg-white dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-zinc-800 border-dashed">
+          <div className="col-span-full p-12 text-center text-slate-500 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 border-dashed">
             No challenges available yet.
           </div>
         )}

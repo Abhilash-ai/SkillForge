@@ -97,22 +97,22 @@ export const CommandPalette = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOp
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
               transition={{ duration: 0.15, ease: 'easeOut' }}
-              className="w-full max-w-2xl bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 shadow-2xl rounded-2xl overflow-hidden pointer-events-auto flex flex-col"
+              className="w-full max-w-2xl bg-slate-900/95 backdrop-blur-xl border border-slate-700 shadow-2xl rounded-2xl overflow-hidden pointer-events-auto flex flex-col"
             >
               
-              <div className="flex items-center px-4 py-3 border-b border-zinc-800">
-                <Search className="w-5 h-5 text-zinc-400 mr-3 shrink-0" />
+              <div className="flex items-center px-4 py-3 border-b border-slate-800">
+                <Search className="w-5 h-5 text-slate-400 mr-3 shrink-0" />
                 <input
                   ref={inputRef}
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search for pages, artisans, or tools..."
-                  className="w-full bg-transparent border-none text-zinc-100 placeholder:text-zinc-500 focus:ring-0 text-lg outline-none"
+                  className="w-full bg-transparent border-none text-slate-100 placeholder:text-slate-500 focus:ring-0 text-lg outline-none"
                 />
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-md text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-colors shrink-0"
+                  className="p-1 rounded-md text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-colors shrink-0"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -123,20 +123,20 @@ export const CommandPalette = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOp
                 {/* Navigation Results */}
                 {navResults.length > 0 && (
                   <div className="mb-4">
-                    <div className="px-3 py-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                    <div className="px-3 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
                       Navigation
                     </div>
                     {navResults.map((link) => (
                       <button
                         key={link.path}
                         onClick={() => handleNavigate(link.path)}
-                        className="w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-zinc-800/80 text-zinc-300 hover:text-white transition-colors group"
+                        className="w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 hover:text-white transition-colors group"
                       >
                         <div className="flex items-center gap-3">
-                          <link.icon className="w-5 h-5 text-zinc-500 group-hover:text-amber-500" />
+                          <link.icon className="w-5 h-5 text-slate-500 group-hover:text-violet-500" />
                           <span className="font-medium">{link.name}</span>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-violet-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </button>
                     ))}
                   </div>
@@ -146,12 +146,12 @@ export const CommandPalette = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOp
                 {query.trim().length >= 2 && (
                   <div>
                     <div className="px-3 py-2 flex items-center justify-between">
-                      <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Artisans</span>
-                      {loading && <div className="w-3 h-3 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>}
+                      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Artisans</span>
+                      {loading && <div className="w-3 h-3 border-2 border-violet-500 border-t-transparent rounded-full animate-spin"></div>}
                     </div>
                     
                     {!loading && userResults.length === 0 && (
-                      <div className="px-4 py-8 text-center text-zinc-500">
+                      <div className="px-4 py-8 text-center text-slate-500">
                         No artisans found matching "{query}"
                       </div>
                     )}
@@ -165,20 +165,20 @@ export const CommandPalette = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOp
                         <button
                           key={user.clerk_id}
                           onClick={() => handleNavigate(`/profile/${user.clerk_id}`)}
-                          className="w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-zinc-800/80 text-zinc-300 hover:text-white transition-colors group"
+                          className="w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 hover:text-white transition-colors group"
                         >
                           <div className="flex items-center gap-3">
-                            <div className="p-1.5 bg-zinc-800 rounded-md text-zinc-400 group-hover:text-amber-500 group-hover:bg-amber-500/10">
+                            <div className="p-1.5 bg-slate-800 rounded-md text-slate-400 group-hover:text-violet-500 group-hover:bg-violet-500/10">
                               <User className="w-5 h-5" />
                             </div>
                             <div className="flex flex-col items-start">
                               <span className="font-medium">{displayName}</span>
-                              <span className="text-xs text-zinc-500 flex items-center gap-1">
+                              <span className="text-xs text-slate-500 flex items-center gap-1">
                                 {user.rank}
                               </span>
                             </div>
                           </div>
-                          <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-violet-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                       );
                     })}
@@ -187,24 +187,24 @@ export const CommandPalette = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOp
 
                 {/* Empty State / Hints */}
                 {query.trim() === '' && (
-                  <div className="px-4 py-12 flex flex-col items-center justify-center text-zinc-500">
+                  <div className="px-4 py-12 flex flex-col items-center justify-center text-slate-500">
                     <Command className="w-12 h-12 mb-4 opacity-20" />
                     <p className="text-sm">Search for anything in the forge</p>
                     <div className="flex gap-2 mt-4">
-                      <span className="px-2 py-1 bg-zinc-800 rounded text-xs">Navigation</span>
-                      <span className="px-2 py-1 bg-zinc-800 rounded text-xs">Users</span>
+                      <span className="px-2 py-1 bg-slate-800 rounded text-xs">Navigation</span>
+                      <span className="px-2 py-1 bg-slate-800 rounded text-xs">Users</span>
                     </div>
                   </div>
                 )}
 
               </div>
               
-              <div className="px-4 py-3 bg-zinc-950 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-500">
+              <div className="px-4 py-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs text-slate-500">
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded">↵</kbd> to select</span>
-                  <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded">↓</kbd> <kbd className="px-1.5 py-0.5 bg-zinc-800 rounded">↑</kbd> to navigate</span>
+                  <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 bg-slate-800 rounded">↵</kbd> to select</span>
+                  <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 bg-slate-800 rounded">↓</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded">↑</kbd> to navigate</span>
                 </div>
-                <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded">esc</kbd> to close</span>
+                <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 bg-slate-800 rounded">esc</kbd> to close</span>
               </div>
 
             </motion.div>

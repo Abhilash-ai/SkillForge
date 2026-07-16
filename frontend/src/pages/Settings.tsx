@@ -131,34 +131,34 @@ const Settings = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-8 text-zinc-900 dark:text-zinc-100">
+    <div className="min-h-screen p-8 text-slate-900 dark:text-slate-100">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl shadow-lg shadow-rose-500/20">
+          <div className="p-3 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl shadow-lg shadow-cyan-500/20">
             <SettingsIcon className="w-8 h-8 text-white" />
           </div>
           <div>
             <h1 className="text-3xl font-extrabold font-['Outfit'] tracking-tight">Settings & Profile</h1>
-            <p className="text-zinc-500 dark:text-zinc-400">Manage your identity, preferences, and aesthetics.</p>
+            <p className="text-slate-500 dark:text-slate-400">Manage your identity, preferences, and aesthetics.</p>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex space-x-1 bg-zinc-200/50 dark:bg-zinc-800/50 p-1 rounded-xl">
+        <div className="flex space-x-1 bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-xl">
           <button
             onClick={() => setActiveTab('profile')}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all ${
               activeTab === 'profile' 
-                ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow' 
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-300'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow' 
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
             }`}
           >
             <UserCircle className="w-4 h-4" /> Profile Info
@@ -167,8 +167,8 @@ const Settings = () => {
             onClick={() => setActiveTab('learning')}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all ${
               activeTab === 'learning' 
-                ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow' 
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-300'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow' 
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
             }`}
           >
             <Brain className="w-4 h-4" /> Learning Preferences
@@ -177,8 +177,8 @@ const Settings = () => {
             onClick={() => setActiveTab('appearance')}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all ${
               activeTab === 'appearance' 
-                ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow' 
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-300'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow' 
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
             }`}
           >
             <Palette className="w-4 h-4" /> Appearance
@@ -192,75 +192,75 @@ const Settings = () => {
           {activeTab === 'profile' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               
-              <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-4">Personal Details</h2>
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Personal Details</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">First Name</label>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">First Name</label>
                     <input 
                       type="text" 
                       value={firstName} 
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none"
+                      className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-cyan-500 outline-none"
                       placeholder="John"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Last Name</label>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Last Name</label>
                     <input 
                       type="text" 
                       value={lastName} 
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none"
+                      className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-cyan-500 outline-none"
                       placeholder="Doe"
                     />
                   </div>
                 </div>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Bio</label>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Bio</label>
                   <textarea 
                     value={bio} 
                     onChange={(e) => setBio(e.target.value)}
                     rows={3}
-                    className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-rose-500 outline-none resize-none"
+                    className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-cyan-500 outline-none resize-none"
                     placeholder="Tell us a little about yourself and your goals..."
                   />
                 </div>
               </section>
 
-              <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-4">Social Links</h2>
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Social Links</h2>
                 <div className="space-y-4">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Link className="h-5 w-5 text-zinc-400" />
+                      <Link className="h-5 w-5 text-slate-400" />
                     </div>
                     <input 
                       type="text" 
                       value={githubUrl}
                       onChange={(e) => setGithubUrl(e.target.value)}
-                      className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl pl-10 px-4 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none"
+                      className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 px-4 py-2.5 text-sm focus:ring-2 focus:ring-cyan-500 outline-none"
                       placeholder="https://github.com/username"
                     />
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Link className="h-5 w-5 text-zinc-400" />
+                      <Link className="h-5 w-5 text-slate-400" />
                     </div>
                     <input 
                       type="text" 
                       value={linkedinUrl}
                       onChange={(e) => setLinkedinUrl(e.target.value)}
-                      className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl pl-10 px-4 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none"
+                      className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 px-4 py-2.5 text-sm focus:ring-2 focus:ring-cyan-500 outline-none"
                       placeholder="https://linkedin.com/in/username"
                     />
                   </div>
                 </div>
               </section>
 
-              <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-1">Profile Icon</h2>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4">Choose an avatar that represents your identity in the forge.</p>
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Profile Icon</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">Choose an avatar that represents your identity in the forge.</p>
                 <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
                   {ICONS.map(icn => {
                     const isSelected = profileIcon === icn.name;
@@ -270,8 +270,8 @@ const Settings = () => {
                         onClick={() => setProfileIcon(icn.name)}
                         className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
                           isSelected 
-                            ? 'border-rose-500 bg-rose-500/10 text-rose-500' 
-                            : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-600 text-zinc-600 dark:text-zinc-400 hover:text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:bg-zinc-800/50'
+                            ? 'border-cyan-500 bg-cyan-500/10 text-cyan-500' 
+                            : 'border-slate-200 dark:border-slate-800 hover:border-slate-600 text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800/50'
                         }`}
                       >
                         <icn.icon className="w-6 h-6 mb-2" />
@@ -287,9 +287,9 @@ const Settings = () => {
           {/* LEARNING TAB */}
           {activeTab === 'learning' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-              <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-1">Your Tech Interests</h2>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4">Select the broad areas of technology you are passionate about.</p>
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Your Tech Interests</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">Select the broad areas of technology you are passionate about.</p>
                 <div className="flex flex-wrap gap-3">
                   {ALL_INTERESTS.map(interest => {
                     const isSelected = selectedInterests.includes(interest);
@@ -299,8 +299,8 @@ const Settings = () => {
                         onClick={() => toggleSelection(interest, selectedInterests, setSelectedInterests)}
                         className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                           isSelected 
-                            ? 'bg-rose-500 border-rose-500 text-white shadow-[0_0_15px_rgba(244,63,94,0.3)]' 
-                            : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-700 hover:border-zinc-600'
+                            ? 'bg-cyan-500 border-cyan-500 text-white shadow-[0_0_15px_rgba(244,63,94,0.3)]' 
+                            : 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-700 hover:border-slate-600'
                         }`}
                       >
                         {interest}
@@ -310,9 +310,9 @@ const Settings = () => {
                 </div>
               </section>
 
-              <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-1">Active Study Topics</h2>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4">What specific domains are you currently trying to master?</p>
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Active Study Topics</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">What specific domains are you currently trying to master?</p>
                 <div className="flex flex-wrap gap-3">
                   {ALL_INTERESTS.map(topic => {
                     const isSelected = selectedTopics.includes(topic);
@@ -322,8 +322,8 @@ const Settings = () => {
                         onClick={() => toggleSelection(topic, selectedTopics, setSelectedTopics)}
                         className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                           isSelected 
-                            ? 'bg-amber-500 border-amber-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.3)]' 
-                            : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-700 hover:border-zinc-600'
+                            ? 'bg-violet-500 border-violet-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.3)]' 
+                            : 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-700 hover:border-slate-600'
                         }`}
                       >
                         {topic}
@@ -338,9 +338,9 @@ const Settings = () => {
           {/* APPEARANCE TAB */}
           {activeTab === 'appearance' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-              <section className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-1">Interface Theme</h2>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6">Customize the look and feel of your Forge Room.</p>
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Interface Theme</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">Customize the look and feel of your Forge Room.</p>
                 
                 <div className="flex items-center gap-4">
                   <button
@@ -351,8 +351,8 @@ const Settings = () => {
                     }}
                     className={`flex-1 flex flex-col items-center gap-3 p-6 rounded-xl border-2 transition-all ${
                       theme === 'light' 
-                        ? 'border-amber-500 bg-amber-500/10 text-amber-600' 
-                        : 'border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:border-zinc-300'
+                        ? 'border-violet-500 bg-violet-500/10 text-violet-600' 
+                        : 'border-slate-200 dark:border-slate-800 text-slate-500 hover:border-slate-300'
                     }`}
                   >
                     <Sun className="w-8 h-8" />
@@ -368,7 +368,7 @@ const Settings = () => {
                     className={`flex-1 flex flex-col items-center gap-3 p-6 rounded-xl border-2 transition-all ${
                       theme === 'dark' 
                         ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400' 
-                        : 'border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:bg-zinc-800'
+                        : 'border-slate-200 dark:border-slate-800 text-slate-500 hover:border-slate-600 hover:bg-slate-800'
                     }`}
                   >
                     <Moon className="w-8 h-8" />
@@ -385,7 +385,7 @@ const Settings = () => {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-400 hover:to-rose-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-rose-900/20 disabled:opacity-50"
+            className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-900/20 disabled:opacity-50"
           >
             {saving ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
